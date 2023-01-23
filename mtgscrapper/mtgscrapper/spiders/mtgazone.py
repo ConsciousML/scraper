@@ -32,3 +32,8 @@ class MTGArenaZoneSpider(scrapy.Spider):
                 'author': author_name,
                 'date': article_date
             }
+
+        next_page = response.xpath(
+            '//a[@class="next page-numbers"]/@href').get()
+        if next_page is not None:
+            yield response.follow(next_page, self.parse)
