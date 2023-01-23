@@ -1,0 +1,22 @@
+{
+    "editor.inlineSuggest.enabled": true,
+    "terminal.integrated.inheritEnv": false,
+    "github.copilot.enable": {
+        "*": true,
+        "yaml": false,
+        "plaintext": true,
+        "markdown": false
+    },
+    "gitlens.hovers.currentLine.over": "line",
+    "editor.formatOnSaveMode": "file",
+    "editor.formatOnSave": true,
+    "editor.rulers": [
+        100
+    ],
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true,
+    "python.formatting.provider": "yapf",
+    "editor.semanticHighlighting.enabled": false,
+    "python.languageServer": "Pylance",
+    "editor.bracketPairColorization.enabled": false
+}
