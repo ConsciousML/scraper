@@ -33,9 +33,14 @@ class MTGArenaZoneSpider(Spider):
             article['tags'] = article_tags
             article['author'] = author_name
             article['date'] = article_date
-            yield article
+            yield response.follow(article_url,
+                                  self.parse_article,
+                                  cb_kwargs=dict(article=article))
 
         next_page = response.xpath(
             '//a[@class="next page-numbers"]/@href').get()
         if next_page is not None:
             yield response.follow(next_page, self.parse)
+
+    def parse_article(self, response, article):
+        print(article)
