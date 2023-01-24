@@ -1,7 +1,9 @@
-import scrapy
+from scrapy import Spider
+
+from mtgscrapper.items import MtgArticle
 
 
-class MTGArenaZoneSpider(scrapy.Spider):
+class MTGArenaZoneSpider(Spider):
     name = 'mtgazone'
     start_urls = ['https://mtgazone.com/articles/']
 
@@ -24,14 +26,14 @@ class MTGArenaZoneSpider(scrapy.Spider):
             article_date = author_date_selector.css('time').xpath(
                 './text()').get()
 
-            yield {
-                'id': article_selector.attrib['id'],
-                'url': article_url,
-                'title': article_title,
-                'tags': article_tags,
-                'author': author_name,
-                'date': article_date
-            }
+            article = MtgArticle()
+            article['id'] = article_selector.attrib['id']
+            article['url'] = article_url
+            article['title'] = article_title
+            article['tags'] = article_tags
+            article['author'] = author_name
+            article['date'] = article_date
+            return article
 
         next_page = response.xpath(
             '//a[@class="next page-numbers"]/@href').get()

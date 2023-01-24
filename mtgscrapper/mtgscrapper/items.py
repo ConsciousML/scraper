@@ -6,7 +6,11 @@
 import scrapy
 
 
-class MtgscrapperItem(scrapy.Item):
+class MtgArticle(scrapy.Item):
     # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+    id = scrapy.Field()
+    title = scrapy.Field()
+    url = scrapy.Field()
+    tags = scrapy.Field()
+    author = scrapy.Field()
+    date = scrapy.Field()
