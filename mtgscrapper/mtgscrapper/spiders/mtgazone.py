@@ -33,7 +33,7 @@ class MTGArenaZoneSpider(Spider):
             article['tags'] = article_tags
             article['author'] = author_name
             article['date'] = article_date
-            return article
+            yield article
 
         next_page = response.xpath(
             '//a[@class="next page-numbers"]/@href').get()

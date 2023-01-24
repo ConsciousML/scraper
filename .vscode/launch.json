@@ -19,7 +19,9 @@
             "cwd": "${workspaceFolder}/mtgscrapper",
             "args": [
                 "runspider",
-                "${file}"
+                "${file}",
+                "-o",
+                "article.json"
             ],
             "console": "integratedTerminal"
         }
