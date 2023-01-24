@@ -7,17 +7,36 @@ class MTGArenaZoneSpider(Spider):
     name = 'mtgazone'
     start_urls = ['https://mtgazone.com/articles/']
 
+    def __init__(self,
+                 forbidden_tags=None,
+                 forbidden_titles=None,
+                 *args,
+                 **kwargs):
+        super(MTGArenaZoneSpider, self).__init__(*args, **kwargs)
+        self.forbidden_tags = forbidden_tags or [
+            'Premium', 'Event Guides', 'Midweek Magic'
+        ]
+        self.forbidden_titles = forbidden_titles or [
+            'Announcements', 'Teaser', 'Podcast', 'Event Guides', 'Leaks',
+            'Spoiler', 'Patch Notes'
+        ]
+
     def parse(self, response):
         for article_selector in response.xpath(
                 '//article[contains(@class, "entry-card post")]'):
 
             title_selector = article_selector.xpath('h2[@class="entry-title"]')
 
-            article_url = title_selector.xpath('a/@href').get()
             article_title = title_selector.xpath('a/text()').get().strip()
+            if not self.filter_title(article_title):
+                continue
 
             article_tags = article_selector.xpath(
                 './ul[@data-type="simple:none"]/li/a/text()').getall()
+            if not self.filter_tags(article_tags):
+                continue
+
+            article_url = title_selector.xpath('a/@href').get()
 
             author_date_selector = article_selector.xpath(
                 './ul[@data-type="icons:none"]')
@@ -43,4 +62,15 @@ class MTGArenaZoneSpider(Spider):
             yield response.follow(next_page, self.parse)
 
     def parse_article(self, response, article):
-        print(article)
+        return article
+
+    def filter_title(self, article_title):
+        if self.forbidden_titles is None:
+            return True
+        return not any(title in article_title
+                       for title in self.forbidden_titles)
+
+    def filter_tags(self, article_tags):
+        if self.forbidden_tags is None:
+            return True
+        return not any(tag in article_tags for tag in self.forbidden_tags)
