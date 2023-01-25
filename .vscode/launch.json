@@ -21,7 +21,9 @@
                 "runspider",
                 "${file}",
                 "-o",
-                "article.json"
+                "article.json",
+                "-a",
+                "parse_article=false"
             ],
             "console": "integratedTerminal"
         }

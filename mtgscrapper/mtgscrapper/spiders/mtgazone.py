@@ -10,16 +10,23 @@ class MTGArenaZoneSpider(Spider):
     def __init__(self,
                  forbidden_tags=None,
                  forbidden_titles=None,
+                 parse_article=True,
                  *args,
                  **kwargs):
         super(MTGArenaZoneSpider, self).__init__(*args, **kwargs)
         self.forbidden_tags = forbidden_tags or [
-            'Premium', 'Event Guides', 'Midweek Magic'
+            'Premium', 'Event Guides', 'Midweek Magic', 'News'
         ]
         self.forbidden_titles = forbidden_titles or [
             'Announcements', 'Teaser', 'Podcast', 'Event Guides', 'Leaks',
-            'Spoiler', 'Patch Notes'
+            'Spoiler', 'Patch Notes', 'Packs', 'Teamfight', 'Genshin', 'Brawl',
+            'Compensation', 'Budget', 'Mastery', 'Tracker', 'Revealed',
+            'Spellslingers'
         ]
+        if isinstance(parse_article, str) and parse_article.lower() == 'false':
+            self.parse_article = False
+        else:
+            self.parse_article = parse_article
 
     def parse(self, response):
         for article_selector in response.xpath(
@@ -52,16 +59,20 @@ class MTGArenaZoneSpider(Spider):
             article['tags'] = article_tags
             article['author'] = author_name
             article['date'] = article_date
-            yield response.follow(article_url,
-                                  self.parse_article,
-                                  cb_kwargs=dict(article=article))
+
+            if self.parse_article:
+                yield response.follow(article_url,
+                                      self.parse_article_content,
+                                      cb_kwargs=dict(article=article))
+            else:
+                yield article
 
         next_page = response.xpath(
             '//a[@class="next page-numbers"]/@href').get()
         if next_page is not None:
             yield response.follow(next_page, self.parse)
 
-    def parse_article(self, response, article):
+    def parse_article_content(self, response, article):
         return article
 
     def filter_title(self, article_title):
