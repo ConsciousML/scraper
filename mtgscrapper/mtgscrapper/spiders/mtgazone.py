@@ -52,13 +52,12 @@ class MTGArenaZoneSpider(Spider):
             article_date = author_date_selector.css('time').xpath(
                 './text()').get()
 
-            article = MtgArticle()
-            article['id'] = article_selector.attrib['id']
-            article['url'] = article_url
-            article['title'] = article_title
-            article['tags'] = article_tags
-            article['author'] = author_name
-            article['date'] = article_date
+            article = MtgArticle(id=article_selector.attrib['id'],
+                                 title=article_title,
+                                 date=article_date,
+                                 url=article_url,
+                                 tags=article_tags,
+                                 author=author_name)
 
             if self.parse_article:
                 yield response.follow(article_url,
@@ -73,6 +72,14 @@ class MTGArenaZoneSpider(Spider):
             yield response.follow(next_page, self.parse)
 
     def parse_article_content(self, response, article):
+        #print(response.xpath('//div[contains(@class, "page-description")]/text()').get())
+
+        content = response.xpath(
+            '//article[contains(@class, "post type-post")]/div[@class="entry-content"]'
+        )
+        if content is None or len(content) == 0:
+            raise ValueError(f'article not found for url {article.url}')
+
         return article
 
     def filter_title(self, article_title):

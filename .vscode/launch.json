@@ -20,10 +20,10 @@
             "args": [
                 "runspider",
                 "${file}",
-                "-o",
+                "-O",
                 "article.json",
-                "-a",
-                "parse_article=false"
+                //"-a",
+                //"parse_article=false"
             ],
             "console": "integratedTerminal"
         }
