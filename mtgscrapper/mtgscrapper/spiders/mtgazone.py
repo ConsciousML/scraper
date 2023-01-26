@@ -66,19 +66,27 @@ class MTGArenaZoneSpider(Spider):
             else:
                 yield article
 
+            # REMOVE
+            return
+
         next_page = response.xpath(
             '//a[@class="next page-numbers"]/@href').get()
         if next_page is not None:
             yield response.follow(next_page, self.parse)
 
     def parse_article_content(self, response, article):
-        #print(response.xpath('//div[contains(@class, "page-description")]/text()').get())
+
+        response.xpath(
+            '//div[contains(@class, "page-description")]/text()').get()
 
         content = response.xpath(
             '//article[contains(@class, "post type-post")]/div[@class="entry-content"]'
         )
         if content is None or len(content) == 0:
             raise ValueError(f'article not found for url {article.url}')
+
+        for block in content.xpath('./p|h2|h3'):
+            print(''.join(block.xpath('.//text()').getall()))
 
         return article
 
