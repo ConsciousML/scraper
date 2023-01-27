@@ -3,22 +3,29 @@
 # See documentation in:
 # https://docs.scrapy.org/en/latest/topics/items.html
 
-import scrapy
+from uuid import uuid4
 from typing import List, Optional
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 
 @dataclass(kw_only=True)
 class MtgItem:
-    id: str
     title: str
     date: str
     item_type: str
+    id_: str | None = None
+
+    def __post_init__(self):
+        if self.id_ is None:
+            self.id_ = str(uuid4())
 
 
 @dataclass(kw_only=True)
 class MtgItemFormat(MtgItem):
-    format: List[str]
+    format: List[str] | None = None
+
+    def __post_init__(self):
+        return super().__post_init__()
 
 
 @dataclass(kw_only=True)
@@ -28,7 +35,10 @@ class MtgArticle(MtgItem):
     tags: List[str]
     author: str
     item_type: str = 'article'
-    content: Optional[List[str]] = None  # List of ids
+    content: List[str] = field(default_factory=list)  # List of ids
+
+    def __post_init__(self):
+        return super().__post_init__()
 
 
 @dataclass(kw_only=True)
@@ -36,7 +46,11 @@ class MtgParagraph(MtgItemFormat):
     text: str
     title: Optional[str] = None
     parent_id: Optional[str] = None
+    previous_block_id: str | None = None
     item_type: str = 'paragraph'
+
+    def __post_init__(self):
+        return super().__post_init__()
 
 
 @dataclass(kw_only=True)
@@ -45,10 +59,14 @@ class MtgCard(MtgItemFormat):
     cart_type: str
     text: str
     set: str
-    body: Optional[str] = None
-    loyalty: Optional[str] = None
+    body: str | None = None
+    loyalty: str | None = None
     item_type: str = 'card'
+
     # Check that boxy and loyalty are not both not null
+
+    def __post_init__(self):
+        return super().__post_init__()
 
 
 @dataclass(kw_only=True)
@@ -57,3 +75,6 @@ class Decklist(MtgItemFormat):
     deck: List[str]
     sideboard: List[str]
     item_type: str = 'decklist'
+
+    def __post_init__(self):
+        return super().__post_init__()
