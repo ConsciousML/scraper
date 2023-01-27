@@ -1,6 +1,7 @@
+import re
 from scrapy import Spider
 
-from mtgscrapper.items import MtgArticle, MtgParagraph
+from mtgscrapper.items import MtgArticle, MtgSection, MtgBlock
 
 
 class MTGArenaZoneSpider(Spider):
@@ -73,54 +74,53 @@ class MTGArenaZoneSpider(Spider):
         if content is None or len(content) == 0:
             raise ValueError(f'article not found for url {article.url}')
 
-        stack = []
+        last_section = None
+        h_tag = re.compile(r'h\d')
 
-        previous_block_id = None
-        for block in content.xpath('./p|h2|h3|ul'):
+        section_list = []
+
+        for block in content.xpath('./p|h1|h2|h3|h4|h6|ul'):
             block_tag = block.root.tag
-            print(''.join(block.xpath('.//text()').getall()))
-            if block_tag == 'h3':
-                if len(stack) > 0 and stack[-1].root.tag == 'h3':
-                    stack.pop()
-                stack.append(block)
-            elif block_tag == 'h2':
-                previous_tag = None
-                while previous_tag != 'h2' and len(stack) != 0:
-                    previous_block = stack.pop()
-                    previous_tag = previous_block.root.tag
 
-                stack.append(block)
-
+            if h_tag.match(block_tag):
+                section_list.append(
+                    MtgSection(
+                        date=article.date,
+                        title=''.join(block.xpath('.//text()').getall()),
+                        level=int(block_tag[1:])
+                    )
+                )
             else:
+                if len(section_list) == 0:
+                    section_list.append(MtgSection(date=article.date, title=None, level=int(1e4)))
+
                 paragraph = ''.join(block.xpath('.//text()').getall())
 
-                previous_tag = None
-                tag_index = len(stack) - 1
-
-                title_stack = []
-                while previous_tag != 'h2' and tag_index >= 0:
-                    previous_block = stack[tag_index]
-                    previous_tag = previous_block.root.tag
-
-                    title_stack.append(''.join(previous_block.xpath('.//text()').getall()))
-
-                    tag_index -= 1
-
-                title = '\n'.join([title_stack[i] for i in range(len(title_stack) - 1, -1, -1)])
-
-                mtg_paragraph = MtgParagraph(
-                    title=title if len(title) > 0 else None,
-                    date=article.date,
-                    format=None,
-                    text=paragraph,
-                    parent_id=article.id_,
-                    previous_block_id=previous_block_id
+                section_list[-1].content.append(
+                    MtgBlock(
+                        date=article.date,
+                        format=None,
+                        text=paragraph,
+                    )
                 )
-                yield mtg_paragraph
 
-                article.content.append(mtg_paragraph.id_)
+        if len(section_list) == 0:
+            raise ValueError(f'article of id {article.id} with url {article.url} is empty.')
+        elif len(section_list) == 1:
+            article.content = section_list
+        else:
+            # More than one section
+            previous_section = section_list.pop(0)
+            while len(section_list) > 0:
+                current_section = section_list.pop(0)
 
-                previous_block_id = mtg_paragraph.id_
+                if current_section.level <= previous_section.level:
+                    article.content.append(previous_section)
+
+                    previous_section = current_section
+                else:
+                    # Current level > previous level
+                    previous_section.add(current_section)
 
         return article
 
