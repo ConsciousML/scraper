@@ -92,7 +92,7 @@ class MTGArenaZoneSpider(Spider):
                 )
             else:
                 if len(section_list) == 0:
-                    section_list.append(MtgSection(date=article.date, title=None, level=int(1e4)))
+                    section_list.append(MtgSection(date=article.date, title='', level=int(1e4)))
 
                 paragraph = ''.join(block.xpath('.//text()').getall())
 
@@ -121,6 +121,7 @@ class MTGArenaZoneSpider(Spider):
                 else:
                     # Current level > previous level
                     previous_section.add(current_section)
+            article.content.append(previous_section)
 
         return article
 

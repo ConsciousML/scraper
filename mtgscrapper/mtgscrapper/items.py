@@ -3,6 +3,7 @@
 # See documentation in:
 # https://docs.scrapy.org/en/latest/topics/items.html
 from __future__ import annotations
+import re
 
 from uuid import uuid4
 from typing import List
@@ -22,10 +23,15 @@ class MtgItem:
 
 @dataclass(kw_only=True)
 class MtgTitle(MtgItem):
-    title: str | None = None
+    title: str
 
     def __post_init__(self):
+        assert self.title is not None, 'title must have a value.'
+        self.title = self.title.strip()
         return super().__post_init__()
+
+    def __str__(self):
+        return f'{self.title}\n'
 
 
 @dataclass(kw_only=True)
@@ -42,6 +48,9 @@ class MtgTitleFormat(MtgTitle, MtgFormat):
     def __post_init__(self):
         return super().__post_init__()
 
+    def __str__(self):
+        return super().__str__()
+
 
 @dataclass(kw_only=True)
 class MtgArticle(MtgTitle):
@@ -55,6 +64,11 @@ class MtgArticle(MtgTitle):
     def __post_init__(self):
         return super().__post_init__()
 
+    def __str__(self) -> str:
+        string = f'{super().__str__()}\n'
+        string += ''.join([str(section) for section in self.content])
+        return string
+
 
 @dataclass(kw_only=True)
 class MtgSection(MtgTitleFormat):
@@ -64,6 +78,11 @@ class MtgSection(MtgTitleFormat):
 
     def __post_init__(self):
         return super().__post_init__()
+
+    def __str__(self):
+        string = f'{super().__str__()}\n'
+        string += ''.join([str(item) for item in self.content])
+        return string
 
     def add(self, section: MtgSection):
         assert self.level < section.level, 'cannot add section to sub-section.'
@@ -81,7 +100,11 @@ class MtgBlock(MtgFormat):
     item_type: str = 'block'
 
     def __post_init__(self):
+        self.text = re.sub(r'(\n)\1+', r'\n', self.text).strip()
         return super().__post_init__()
+
+    def __str__(self) -> str:
+        return f'{self.text}\n\n'
 
 
 @dataclass(kw_only=True)
