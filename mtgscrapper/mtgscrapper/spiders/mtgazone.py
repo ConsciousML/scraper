@@ -2,6 +2,7 @@ import re
 from scrapy import Spider
 
 from mtgscrapper.items import MtgArticle, MtgSection, MtgBlock
+from mtgscrapper.mtg_format import MTGFORMATS, FormatFinder
 
 
 class MTGArenaZoneSpider(Spider):
@@ -58,7 +59,6 @@ class MTGArenaZoneSpider(Spider):
                 )
             else:
                 yield article
-            return
 
         next_page = response.xpath('//a[@class="next page-numbers"]/@href').get()
         if next_page is not None:
@@ -74,7 +74,6 @@ class MTGArenaZoneSpider(Spider):
         if content is None or len(content) == 0:
             raise ValueError(f'article not found for url {article.url}')
 
-        last_section = None
         h_tag = re.compile(r'h\d')
 
         section_list = []
@@ -122,6 +121,9 @@ class MTGArenaZoneSpider(Spider):
                     # Current level > previous level
                     previous_section.add(current_section)
             article.content.append(previous_section)
+
+        format_finder = FormatFinder()
+        format_finder(article)
 
         return article
 

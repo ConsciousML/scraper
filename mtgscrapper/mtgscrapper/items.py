@@ -9,6 +9,8 @@ from uuid import uuid4
 from typing import List
 from dataclasses import dataclass, field
 
+from mtgscrapper.mtg_format import MTGFORMATS
+
 
 @dataclass(kw_only=True)
 class MtgItem:
@@ -36,9 +38,10 @@ class MtgTitle(MtgItem):
 
 @dataclass(kw_only=True)
 class MtgFormat(MtgItem):
-    format: List[str] | None = None
+    format: List[MTGFORMATS] | None = None
 
     def __post_init__(self):
+        assert self.format is None or self.format in MTGFORMATS.__args__
         return super().__post_init__()
 
 
@@ -59,6 +62,7 @@ class MtgArticle(MtgTitle):
     tags: List[str]
     author: str
     item_type: str = 'article'
+    priority_format: MTGFORMATS = None
     content: List[MtgSection] = field(default_factory=list)  # List of ids
 
     def __post_init__(self):
