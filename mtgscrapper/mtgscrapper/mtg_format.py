@@ -1,4 +1,4 @@
-from typing import Literal, List, Set
+from typing import Literal, Dict
 
 import numpy as np
 
@@ -14,7 +14,7 @@ class FormatHandler:
         formats = [tag.lower() for tag in article.tags if tag.lower() in MTGFORMATS.__args__]
         article.formats = formats
 
-        known_formats = set(formats)
+        known_formats = {format_: 0 for format_ in formats}
 
         if len(formats) == 1:
             priority_format = formats[0]
@@ -26,32 +26,48 @@ class FormatHandler:
 
         article.formats = list(known_formats)
 
+        if priority_format is None:
+            format_occurences = np.array(list(known_formats.values()))
+            sum_occurences = format_occurences.sum()
+            if sum_occurences == 0:
+                return
+
+            max_key_index = format_occurences.argmax()
+
+            format_list = list(known_formats.keys())
+
+            if format_occurences[max_key_index] == sum_occurences:
+                article.set_format(format_list[max_key_index])
+
     def process_content(
-        self, content: "MtgSection | MtgBlock", known_formats: Set[MTGFORMATS], format_=None
+        self, content: "MtgSection | MtgBlock", known_formats: Dict[MTGFORMATS, int], format_=None
     ):
         if content.item_type == 'section':
             self.process_section(content, known_formats, format_=format_)
-        if content.item_type == 'block':
+        elif content.item_type == 'block':
             self.process_block(content, known_formats, format_=format_)
+        elif content.item_type == 'decklist':
+            self.process_decklist(content, known_formats, format_=format_)
 
-    def process_section(self, section: "MtgSection", known_formats: Set[MTGFORMATS], format_=None):
+    def process_section(
+        self, section: "MtgSection", known_formats: Dict[MTGFORMATS, int], format_=None
+    ):
         if format_ is None:
             format_ = self.check_format_in_title(section.title)
             section.format_ = format_
             if format_ is not None:
-                known_formats.add(format_)
+                known_formats.setdefault(format_, 0)
+                known_formats[format_] += 1
 
         section.format_ = format_
 
         for content in section:
-            found_format = self.process_content(content, known_formats, format_=format_)
-            if found_format is not None:
-                known_formats.add(found_format)
+            self.process_content(content, known_formats, format_=format_)
 
-    def process_block(self, block: "MtgBlock", known_formats: Set[MTGFORMATS], format_=None):
+    def process_block(self, block: "MtgBlock", known_formats: Dict[MTGFORMATS, int], format_=None):
         if format_ is not None:
             block.format_ = format_
-            return format_
+            return
 
         # Get most occurence of a format name in the text
         if self.search_in_text:
@@ -65,9 +81,17 @@ class FormatHandler:
             block.format_ = format_
 
             if format_ is not None:
-                known_formats.add(format_)
+                known_formats.setdefault(format_, 0)
+                known_formats[format_] += 1
 
-        return block.format_
+    def process_decklist(
+        self, decklist: "MtgDecklist", known_formats: Dict[MTGFORMATS, int], format_=None
+    ):
+        if decklist.format_ is None:
+            decklist.format_ = format_
+        else:
+            known_formats.setdefault(decklist.format_, 0)
+            known_formats[decklist.format_] += 1
 
     def check_format_in_title(self, title) -> MTGFORMATS | None:
         if title is None:

@@ -54,13 +54,9 @@ class MTGArenaZoneSpider(Spider):
             )
 
             if self.parse_article:
-                try:
-                    yield response.follow(
-                        article_url, self.parse_article_content, cb_kwargs=dict(article=article)
-                    )
-                except Exception as error:
-                    print(article.url)
-                    raise error
+                yield response.follow(
+                    article_url, self.parse_article_content, cb_kwargs=dict(article=article)
+                )
             else:
                 yield article
 
@@ -69,7 +65,6 @@ class MTGArenaZoneSpider(Spider):
             yield response.follow(next_page, self.parse)
 
     def parse_article_content(self, response, article):
-
         response.xpath('//div[contains(@class, "page-description")]/text()').get()
 
         content = response.xpath(
@@ -82,7 +77,9 @@ class MTGArenaZoneSpider(Spider):
 
         section_list = []
 
-        for block in content.xpath('./p|h1|h2|h3|h4|h6|ul|div[@class="deck-block"]'):
+        for block in content.xpath(
+            './p|h1|h2|h3|h4|h6|ul|div[@class="deck-block"]|figure[@class="wp-block-table"]'
+        ):
             block_tag = block.root.tag
 
             if h_tag.match(block_tag):
@@ -96,6 +93,8 @@ class MTGArenaZoneSpider(Spider):
             else:
                 if block_tag == 'div':
                     element = self.parse_decklist(block, article)
+                elif block_tag == 'figure':
+                    print(''.join(block.xpath('.//text()').getall()))
                 else:
                     if len(section_list) == 0:
                         section_list.append(MtgSection(date=article.date, title='', level=int(1e4)))

@@ -41,7 +41,9 @@ class MtgFormat(MtgItem):
     format_: MTGFORMATS | None = None
 
     def __post_init__(self):
-        assert self.format_ is None or self.format_.lower() in MTGFORMATS.__args__
+        if self.format_ is not None:
+            self.format_ = self.format_.lower()
+            assert self.format_ in MTGFORMATS.__args__
         return super().__post_init__()
 
 
@@ -95,6 +97,17 @@ class MtgArticle(MtgTitle, MtgMultiFormat, MtgContent):
     def __post_init__(self):
         self.tags = [tag.lower() for tag in self.tags]
         return super().__post_init__()
+
+    def set_format(self, format_: MTGFORMATS):
+        self._set_format_recursive(self.content, format_=format_)
+
+    def _set_format_recursive(
+        self, content_list: List[MtgSection | MtgBlock | Decklist], format_: MTGFORMATS
+    ):
+        for content in content_list:
+            content.format_ = format_
+            if content.item_type == 'section':
+                self._set_format_recursive(content.content, format_=format_)
 
     def __str__(self) -> str:
         string = f'{super().__str__()}\n'
@@ -167,10 +180,24 @@ class Decklist(MtgTitle, MtgFormat):
     item_type: str = 'decklist'
 
     def __post_init__(self):
-        if self.best_of is not None:
-            assert len(self.deck) > 0
-            if self.best_of == 3:
-                assert self.sideboard is not None and len(self.sideboard) > 0
-            else:
-                assert self.sideboard is None
+        assert len(self.deck) > 0
+        #if self.best_of is not None and self.best_of == 3:
+        #    assert self.sideboard is not None and len(self.sideboard) > 0
         return super().__post_init__()
+
+    def __str__(self):
+        metadata = f'Format: {self.format_}\n'
+        if self.archetype is not None:
+            metadata += f'Archetype: {self.archetype}\n'
+        if self.best_of is not None:
+            metadata += f'BO{self.best_of}\n'
+
+        string = f'{metadata}\nDeck\n{self.cards_to_str(self.deck)}\n'
+        if self.sideboard is not None:
+            string += f'Sideboard\n{self.cards_to_str(self.sideboard)}\n'
+        return string
+
+    def cards_to_str(self, card_list):
+        if card_list is None:
+            return ''
+        return ''.join([f'{nb_copies} {card_name}\n' for nb_copies, card_name in card_list])
