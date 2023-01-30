@@ -13,12 +13,15 @@ class MTGArenaZoneSpider(Spider):
         self, forbidden_tags=None, forbidden_titles=None, parse_article=True, *args, **kwargs
     ):
         super(MTGArenaZoneSpider, self).__init__(*args, **kwargs)
-        self.forbidden_tags = forbidden_tags or ['Premium', 'Event Guides', 'Midweek Magic', 'News']
-        self.forbidden_titles = forbidden_titles or [
-            'Announcements', 'Teaser', 'Podcast', 'Event Guides', 'Leaks', 'Spoiler', 'Patch Notes',
-            'Packs', 'Teamfight', 'Genshin', 'Brawl', 'Compensation', 'Budget', 'Mastery',
-            'Tracker', 'Revealed', 'Spellslingers', 'Codes'
-        ]
+        #self.forbidden_tags = forbidden_tags or ['Premium', 'Event Guides', 'Midweek Magic', 'News']
+        #self.forbidden_tags = forbidden_tags or ['Premium', 'Event Guides', 'Midweek Magic', 'News']
+        self.forbidden_tags = forbidden_tags or ['Premium']
+        #self.forbidden_titles = forbidden_titles or [
+        #    'Announcements', 'Teaser', 'Podcast', 'Event Guides', 'Leaks', 'Spoiler', 'Patch Notes',
+        #    'Packs', 'Teamfight', 'Genshin', 'Brawl', 'Compensation', 'Budget', 'Mastery',
+        #    'Tracker', 'Revealed', 'Spellslingers', 'Codes'
+        #]
+        self.forbidden_titles = forbidden_titles or ['Teamfight', 'Genshin', 'Spellslingers']
         if isinstance(parse_article, str) and parse_article.lower() == 'false':
             self.parse_article = False
         else:
@@ -93,13 +96,19 @@ class MTGArenaZoneSpider(Spider):
             else:
                 if block_tag == 'div':
                     element = self.parse_decklist(block, article)
-                elif block_tag == 'figure':
-                    print(''.join(block.xpath('.//text()').getall()))
                 else:
                     if len(section_list) == 0:
                         section_list.append(MtgSection(date=article.date, title='', level=int(1e4)))
 
-                    paragraph = ''.join(block.xpath('.//text()').getall())
+                    if block_tag == 'figure':
+                        paragraph = ''
+                        for row in block.xpath('.//tr'):
+                            paragraph += ' '.join([
+                                elt.strip() for elt in row.xpath('.//text()').getall()
+                            ]) + '\n'
+
+                    else:
+                        paragraph = ''.join(block.xpath('.//text()').getall())
                     element = MtgBlock(
                         date=article.date,
                         format_=None,
@@ -124,11 +133,7 @@ class MTGArenaZoneSpider(Spider):
                     previous_section = current_section
                 else:
                     # Current level > previous level
-                    try:
-                        previous_section.add(current_section)
-                    except Exception as error:
-                        print(article.url)
-                        raise error
+                    previous_section.add(current_section)
 
             article.add(previous_section)
 
