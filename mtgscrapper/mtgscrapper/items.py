@@ -122,7 +122,11 @@ class MtgSection(MtgTitle, MtgFormat, MtgContent):
             self.content.append(section)
             return
 
-        self.content[-1].add(section)
+        last_content = self.content[-1]
+        if last_content.item_type == 'section' and last_content.level < section.level:
+            last_content.add(section)
+        else:
+            super().add(section)
 
 
 @dataclass(kw_only=True)

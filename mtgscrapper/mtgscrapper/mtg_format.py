@@ -2,7 +2,7 @@ from typing import Literal
 
 import numpy as np
 
-MTGFORMATS = Literal['limited', 'standard', 'historic', 'pioneer', 'explorer', 'alchemy']
+MTGFORMATS = Literal['limited', 'standard', 'historic', 'alchemy', 'explorer', 'pioneer']
 
 
 class FormatHandler:
@@ -32,6 +32,7 @@ class FormatHandler:
         if format_ is None:
             format_ = self.check_format_in_title(section.title)
             section.format_ = format_
+        section.format_ = format_
 
         for content in section:
             self.process_content(content, format_=format_)
@@ -42,7 +43,9 @@ class FormatHandler:
             return format_
 
         # Get most occurence of a format name in the text
-        format_occurences = np.array([block.text.count(format_) for format_ in MTGFORMATS.__args__])
+        format_occurences = np.array([
+            block.text.lower().count(format_) for format_ in MTGFORMATS.__args__
+        ])
         if format_occurences.sum() == 0:
             return None
 
