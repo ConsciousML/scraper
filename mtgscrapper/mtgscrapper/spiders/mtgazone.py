@@ -2,7 +2,7 @@ import re
 from scrapy import Spider
 
 from mtgscrapper.items import MtgArticle, MtgSection, MtgBlock
-from mtgscrapper.mtg_format import MTGFORMATS, FormatFinder
+from mtgscrapper.mtg_format import FormatHandler
 
 
 class MTGArenaZoneSpider(Spider):
@@ -98,7 +98,7 @@ class MTGArenaZoneSpider(Spider):
                 section_list[-1].content.append(
                     MtgBlock(
                         date=article.date,
-                        format=None,
+                        format_=None,
                         text=paragraph,
                     )
                 )
@@ -106,7 +106,7 @@ class MTGArenaZoneSpider(Spider):
         if len(section_list) == 0:
             raise ValueError(f'article of id {article.id} with url {article.url} is empty.')
         elif len(section_list) == 1:
-            article.content = section_list
+            article.add(section_list)
         else:
             # More than one section
             previous_section = section_list.pop(0)
@@ -114,16 +114,21 @@ class MTGArenaZoneSpider(Spider):
                 current_section = section_list.pop(0)
 
                 if current_section.level <= previous_section.level:
-                    article.content.append(previous_section)
+                    article.add(previous_section)
 
                     previous_section = current_section
                 else:
                     # Current level > previous level
-                    previous_section.add(current_section)
-            article.content.append(previous_section)
+                    try:
+                        previous_section.add(current_section)
+                    except Exception as error:
+                        print(article.url)
+                        raise error
 
-        format_finder = FormatFinder()
-        format_finder(article)
+            article.add(previous_section)
+
+        format_finder = FormatHandler()
+        format_finder.process_article(article)
 
         return article
 

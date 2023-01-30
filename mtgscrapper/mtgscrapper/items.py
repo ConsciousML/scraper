@@ -38,32 +38,59 @@ class MtgTitle(MtgItem):
 
 @dataclass(kw_only=True)
 class MtgFormat(MtgItem):
-    format: List[MTGFORMATS] | None = None
+    format_: MTGFORMATS | None = None
 
     def __post_init__(self):
-        assert self.format is None or self.format in MTGFORMATS.__args__
+        assert self.format_ is None or self.format_ in MTGFORMATS.__args__
         return super().__post_init__()
 
 
 @dataclass(kw_only=True)
-class MtgTitleFormat(MtgTitle, MtgFormat):
+class MtgMultiFormat(MtgItem):
+    formats: List[MTGFORMATS] | None = None
 
     def __post_init__(self):
+        assert self.formats is None or all(
+            format_ in MTGFORMATS.__args__ for format_ in self.formats
+        )
         return super().__post_init__()
-
-    def __str__(self):
-        return super().__str__()
 
 
 @dataclass(kw_only=True)
-class MtgArticle(MtgTitle):
+class MtgContent(MtgItem):
+    content: List[MtgSection | MtgBlock] = field(default_factory=list)  # List of ids
+    length = 0
+
+    def add(self, section: MtgSection | List[MtgSection]) -> None:
+        if isinstance(section, list):
+            self.content += section
+            self.length += len(section)
+            return
+
+        self.content.append(section)
+        self.length += 1
+
+    def __len__(self):
+        self.length = len(self.content)
+        return self.length
+
+    def __iter__(self):
+        for i in range(len(self)):
+            yield self[i]
+
+    def __getitem__(self, index):
+        assert index >= 0 and index < self.length
+        return self.content[index]
+
+
+@dataclass(kw_only=True)
+class MtgArticle(MtgTitle, MtgMultiFormat, MtgContent):
     # define the fields for your item here like:
     url: str
     tags: List[str]
     author: str
     item_type: str = 'article'
-    priority_format: MTGFORMATS = None
-    content: List[MtgSection] = field(default_factory=list)  # List of ids
+    nb_articles: int = 0
 
     def __post_init__(self):
         return super().__post_init__()
@@ -75,7 +102,7 @@ class MtgArticle(MtgTitle):
 
 
 @dataclass(kw_only=True)
-class MtgSection(MtgTitleFormat):
+class MtgSection(MtgTitle, MtgFormat, MtgContent):
     content: List[MtgBlock | MtgSection] = field(default_factory=list)
     item_type: str = 'section'
     level: int
@@ -127,8 +154,7 @@ class MtgCard(MtgBlock):
 
 
 @dataclass(kw_only=True)
-class Decklist(MtgTitleFormat):
-    format: str
+class Decklist(MtgTitle, MtgFormat):
     deck: List[str]
     sideboard: List[str]
     item_type: str = 'decklist'
