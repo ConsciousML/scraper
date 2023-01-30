@@ -1,7 +1,7 @@
 import re
 from scrapy import Spider
 
-from mtgscrapper.items import MtgArticle, MtgSection, MtgBlock
+from mtgscrapper.items import MtgArticle, MtgSection, MtgBlock, Decklist
 from mtgscrapper.mtg_format import FormatHandler
 
 
@@ -54,9 +54,13 @@ class MTGArenaZoneSpider(Spider):
             )
 
             if self.parse_article:
-                yield response.follow(
-                    article_url, self.parse_article_content, cb_kwargs=dict(article=article)
-                )
+                try:
+                    yield response.follow(
+                        article_url, self.parse_article_content, cb_kwargs=dict(article=article)
+                    )
+                except Exception as error:
+                    print(article.url)
+                    raise error
             else:
                 yield article
 
@@ -78,7 +82,7 @@ class MTGArenaZoneSpider(Spider):
 
         section_list = []
 
-        for block in content.xpath('./p|h1|h2|h3|h4|h6|ul'):
+        for block in content.xpath('./p|h1|h2|h3|h4|h6|ul|div[@class="deck-block"]'):
             block_tag = block.root.tag
 
             if h_tag.match(block_tag):
@@ -90,18 +94,20 @@ class MTGArenaZoneSpider(Spider):
                     )
                 )
             else:
-                if len(section_list) == 0:
-                    section_list.append(MtgSection(date=article.date, title='', level=int(1e4)))
+                if block_tag == 'div':
+                    element = self.parse_decklist(block, article)
+                else:
+                    if len(section_list) == 0:
+                        section_list.append(MtgSection(date=article.date, title='', level=int(1e4)))
 
-                paragraph = ''.join(block.xpath('.//text()').getall())
-
-                section_list[-1].content.append(
-                    MtgBlock(
+                    paragraph = ''.join(block.xpath('.//text()').getall())
+                    element = MtgBlock(
                         date=article.date,
                         format_=None,
                         text=paragraph,
                     )
-                )
+
+                section_list[-1].content.append(element)
 
         if len(section_list) == 0:
             raise ValueError(f'article of id {article.id} with url {article.url} is empty.')
@@ -131,6 +137,30 @@ class MTGArenaZoneSpider(Spider):
         format_finder.process_article(article)
 
         return article
+
+    def parse_decklist(self, block, article):
+        best_of = block.xpath('.//div[@class="bo"]/text()').get()
+        if best_of is not None:
+            best_of = int(best_of[-1])
+
+        return Decklist(
+            title=block.xpath('.//div[@class="name"]/text()').get(),
+            date=article.date,
+            format_=block.xpath('.//div[@class="format"]/text()').get(),
+            deck=self.parse_cards(block.xpath('.//div[@class="decklist main"]')),
+            sideboard=self.parse_cards(block.xpath('.//div[@class="decklist sideboard"]')),
+            archetype=block.xpath('.//div[@class="archetype"]/text()').get(),
+            best_of=best_of
+        )
+
+    def parse_cards(self, block):
+        card_list = block.xpath(
+            './/div[contains(@class,"card")]/@*[name()="data-quantity" or name()="data-name"]'
+        ).getall()
+
+        card_pairs = [card_list[i:i + 2] for i in range(0, len(card_list), 2)]
+
+        return card_pairs if len(card_pairs) > 0 else None
 
     def filter_title(self, article_title):
         if self.forbidden_titles is None:

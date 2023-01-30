@@ -41,7 +41,7 @@ class MtgFormat(MtgItem):
     format_: MTGFORMATS | None = None
 
     def __post_init__(self):
-        assert self.format_ is None or self.format_ in MTGFORMATS.__args__
+        assert self.format_ is None or self.format_.lower() in MTGFORMATS.__args__
         return super().__post_init__()
 
 
@@ -161,8 +161,16 @@ class MtgCard(MtgBlock):
 @dataclass(kw_only=True)
 class Decklist(MtgTitle, MtgFormat):
     deck: List[str]
-    sideboard: List[str]
+    sideboard: List[str] | None = None
+    archetype: str | None = None
+    best_of: int | None = None
     item_type: str = 'decklist'
 
     def __post_init__(self):
+        if self.best_of is not None:
+            assert len(self.deck) > 0
+            if self.best_of == 3:
+                assert self.sideboard is not None and len(self.sideboard) > 0
+            else:
+                assert self.sideboard is None
         return super().__post_init__()
