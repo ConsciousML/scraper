@@ -127,7 +127,7 @@ class MTGArenaZoneSpider(Spider):
 
             article.add(previous_section)
 
-        format_finder = FormatHandler()
+        format_finder = FormatHandler(search_in_text=False)
         format_finder.process_article(article)
 
         return article
