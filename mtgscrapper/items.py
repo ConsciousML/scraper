@@ -6,7 +6,7 @@ from __future__ import annotations
 import re
 
 from uuid import uuid4
-from typing import List
+from typing import List, Tuple
 from dataclasses import dataclass, field
 
 from mtgscrapper.mtg_format import MTGFORMATS
@@ -46,6 +46,10 @@ class MtgFormat(MtgItem):
             assert self.format_ in MTGFORMATS.__args__
         return super().__post_init__()
 
+    @classmethod
+    def from_dict(cls, dict_):
+        return cls(**dict_)
+
 
 @dataclass(kw_only=True)
 class MtgMultiFormat(MtgItem):
@@ -62,6 +66,11 @@ class MtgMultiFormat(MtgItem):
 class MtgContent(MtgItem):
     content: List[MtgSection | MtgBlock] = field(default_factory=list)  # List of ids
     length = 0
+
+    def __post_init__(self):
+        # Set length of object if called with @classmethod
+        len(self)
+        return super().__post_init__()
 
     def add(self, section: MtgSection | List[MtgSection]) -> None:
         if isinstance(section, list):
@@ -84,6 +93,25 @@ class MtgContent(MtgItem):
         assert index >= 0 and index < self.length
         return self.content[index]
 
+    @classmethod
+    def from_dict(cls, dict_):
+        cls_args = dict_.copy()
+        cls_args.pop('length', None)
+
+        content_objects = []
+        for content in dict_['content']:
+            match content['item_type']:
+                case 'section':
+                    content_objects.append(MtgSection.from_dict(content))
+                case 'block':
+                    content_objects.append(MtgBlock.from_dict(content))
+                case 'decklist':
+                    content_objects.append(Decklist.from_dict(content))
+
+        cls_args['content'] = content_objects
+
+        return cls(**cls_args)
+
 
 @dataclass(kw_only=True)
 class MtgArticle(MtgTitle, MtgMultiFormat, MtgContent):
@@ -95,6 +123,7 @@ class MtgArticle(MtgTitle, MtgMultiFormat, MtgContent):
 
     def __post_init__(self):
         self.tags = [tag.lower() for tag in self.tags]
+
         return super().__post_init__()
 
     def set_format(self, format_: MTGFORMATS):
@@ -113,9 +142,8 @@ class MtgArticle(MtgTitle, MtgMultiFormat, MtgContent):
         string += ''.join([str(section) for section in self.content])
         return string
 
-
 @dataclass(kw_only=True)
-class MtgSection(MtgTitle, MtgFormat, MtgContent):
+class MtgSection(MtgContent, MtgTitle, MtgFormat):
     content: List[MtgBlock | MtgSection] = field(default_factory=list)
     item_type: str = 'section'
     level: int
@@ -172,16 +200,15 @@ class MtgCard(MtgBlock):
 
 @dataclass(kw_only=True)
 class Decklist(MtgTitle, MtgFormat):
-    deck: List[str]
-    sideboard: List[str] | None = None
+    deck: List[Tuple[int, str]]
+    sideboard: List[Tuple[int, str]] | None = None
     archetype: str | None = None
     best_of: int | None = None
     item_type: str = 'decklist'
 
     def __post_init__(self):
-        assert len(self.deck) > 0
-        #if self.best_of is not None and self.best_of == 3:
-        #    assert self.sideboard is not None and len(self.sideboard) > 0
+        assert len(self.deck) > 0, 'deck must contain cards'
+
         return super().__post_init__()
 
     def __str__(self):

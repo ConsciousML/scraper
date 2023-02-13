@@ -139,7 +139,7 @@ class MTGArenaZoneSpider(Spider):
         format_finder = FormatHandler(search_in_text=False)
         format_finder.process_article(article)
 
-        return vars(article)
+        return article.to_dict()
 
     def parse_decklist(self, block, article):
         best_of = block.xpath('.//div[@class="bo"]/text()').get()
