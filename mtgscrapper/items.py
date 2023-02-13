@@ -95,6 +95,10 @@ class MtgArticle(MtgTitle, MtgMultiFormat, MtgContent):
 
     def __post_init__(self):
         self.tags = [tag.lower() for tag in self.tags]
+
+        # Set length of object if called with @classmethod
+        len(self)
+
         return super().__post_init__()
 
     def set_format(self, format_: MTGFORMATS):
@@ -112,6 +116,15 @@ class MtgArticle(MtgTitle, MtgMultiFormat, MtgContent):
         string = f'{super().__str__()}\n'
         string += ''.join([str(section) for section in self.content])
         return string
+
+    @classmethod
+    def from_dict(cls, dict_):
+        assert dict_['item_type'] == 'article'
+
+        cls_args = dict_.copy()
+        del cls_args['length']
+
+        return cls(**cls_args)
 
 
 @dataclass(kw_only=True)
