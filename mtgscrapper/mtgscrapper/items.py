@@ -92,7 +92,6 @@ class MtgArticle(MtgTitle, MtgMultiFormat, MtgContent):
     tags: List[str]
     author: str
     item_type: str = 'article'
-    nb_articles: int = 0
 
     def __post_init__(self):
         self.tags = [tag.lower() for tag in self.tags]

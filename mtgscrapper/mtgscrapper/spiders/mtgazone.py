@@ -14,7 +14,6 @@ class MTGArenaZoneSpider(Spider):
     ):
         super(MTGArenaZoneSpider, self).__init__(*args, **kwargs)
         #self.forbidden_tags = forbidden_tags or ['Premium', 'Event Guides', 'Midweek Magic', 'News']
-        #self.forbidden_tags = forbidden_tags or ['Premium', 'Event Guides', 'Midweek Magic', 'News']
         self.forbidden_tags = forbidden_tags or ['Premium']
         #self.forbidden_titles = forbidden_titles or [
         #    'Announcements', 'Teaser', 'Podcast', 'Event Guides', 'Leaks', 'Spoiler', 'Patch Notes',
@@ -55,13 +54,13 @@ class MTGArenaZoneSpider(Spider):
                 tags=article_tags,
                 author=author_name
             )
-
             if self.parse_article:
                 yield response.follow(
                     article_url, self.parse_article_content, cb_kwargs=dict(article=article)
                 )
             else:
                 yield article
+            return
 
         next_page = response.xpath('//a[@class="next page-numbers"]/@href').get()
         if next_page is not None:
@@ -140,7 +139,7 @@ class MTGArenaZoneSpider(Spider):
         format_finder = FormatHandler(search_in_text=False)
         format_finder.process_article(article)
 
-        return article
+        return vars(article)
 
     def parse_decklist(self, block, article):
         best_of = block.xpath('.//div[@class="bo"]/text()').get()
