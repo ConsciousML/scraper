@@ -1,755 +1,753 @@
-[
-    {
-        "date": "February 13, 2023",
-        "item_type": "article",
-        "id_": "post-172366",
-        "content": [
-            {
-                "date": "February 13, 2023",
-                "item_type": "section",
-                "id_": "a6007b51-e3c8-4859-a2da-a47a978c1730",
-                "content": [
-                    {
-                        "date": "February 13, 2023",
-                        "item_type": "block",
-                        "id_": "6d07f78e-63b6-4298-8937-2db37d9cbeff",
-                        "format_": "standard",
-                        "text": "With Phyrexia: All Will Be One\u2019s release, we have five festival events to play in to celebrate! Battle your way through Singleton events with different emblems in order to claim as many ichor card styles as you can! Today, I\u2019ll be covering the first event, The Autonomous Furnace."
-                    }
-                ],
-                "format_": "standard",
-                "title": "",
-                "level": 10000
-            },
-            {
-                "date": "February 13, 2023",
-                "item_type": "section",
-                "id_": "0955e8d5-2768-4f6e-931b-7989a0532235",
-                "content": [
-                    {
-                        "date": "February 13, 2023",
-                        "item_type": "block",
-                        "id_": "38f520ef-995d-4ef8-b173-7c540fe45ea6",
-                        "format_": "standard",
-                        "text": "Dates: February 13, 2023 8AM PST \u2013 February 16, 2023 8AM PST\nEntry: 2,500 Gold or 500 gems\nFormat: Singleton with The Autonomous Furnace Emblem\nStructure: Play as much as you want until the event ends."
-                    },
-                    {
-                        "date": "February 13, 2023",
-                        "item_type": "section",
-                        "id_": "e2918509-e79e-47bd-944f-104a443b8bab",
-                        "content": [
-                            {
-                                "date": "February 13, 2023",
-                                "item_type": "block",
-                                "id_": "48b5c7cd-16ec-4567-8434-cb8c8f4f6528",
-                                "format_": "standard",
-                                "text": "Whenever you discard one or more nonland cards, you may exile one of them from your graveyard. If you do, you may cast it this turn."
-                            }
-                        ],
-                        "format_": "standard",
-                        "title": "The Autonomous Furnace Emblem",
-                        "level": 3
-                    }
-                ],
-                "format_": "standard",
-                "title": "Event Details",
-                "level": 2
-            },
-            {
-                "date": "February 13, 2023",
-                "item_type": "section",
-                "id_": "eb66a1b3-3a7d-42a0-b936-d4ae71d354d0",
-                "content": [
-                    {
-                        "date": "February 13, 2023",
-                        "item_type": "block",
-                        "id_": "2ec3239c-882f-41dc-a91c-a9b14a67a044",
-                        "format_": "standard",
-                        "text": "Wins Rewards\n5 Wins Solphim, Mayhem Dominus ichor card style\n4 Wins Capricious Hellraiser ichor card style\n3 Wins Slobad, Iron Goblin ichor card style\n2 Wins Urabrask's Anointer ichor card style\n1 Win Sawblade Scamp ichor card style"
-                    }
-                ],
-                "format_": "standard",
-                "title": "Event Rewards",
-                "level": 2
-            },
-            {
-                "date": "February 13, 2023",
-                "item_type": "section",
-                "id_": "bc535fd6-f228-4420-8b20-bd4f01f898ca",
-                "content": [
-                    {
-                        "date": "February 13, 2023",
-                        "item_type": "block",
-                        "id_": "fedb7bcf-cfa8-42a0-a78f-6ef6c79cba80",
-                        "format_": "standard",
-                        "text": "While there have been many events where the emblem didn\u2019t have much bearing on how to construct decks, this is not one of those events. This emblem is extremely powerful and should be utilized to the fullest!"
-                    },
-                    {
-                        "date": "February 13, 2023",
-                        "item_type": "section",
-                        "id_": "d3c5975a-c882-46ab-8638-163d17704a9a",
-                        "content": [
-                            {
-                                "date": "February 13, 2023",
-                                "item_type": "decklist",
-                                "id_": "4b9c791c-8d83-4046-9bbf-8599d50ef7b7",
-                                "format_": "standard",
-                                "title": "Esper Midrange",
-                                "deck": [
-                                    [
-                                        "1",
-                                        "Kaito Shizuki"
-                                    ],
-                                    [
-                                        "1",
-                                        "Liliana of the Veil"
-                                    ],
-                                    [
-                                        "1",
-                                        "The Wandering Emperor"
-                                    ],
-                                    [
-                                        "1",
-                                        "Skrelv, Defector Mite"
-                                    ],
-                                    [
-                                        "1",
-                                        "Ledger Shredder"
-                                    ],
-                                    [
-                                        "1",
-                                        "Suspicious Stowaway"
-                                    ],
-                                    [
-                                        "1",
-                                        "Raffine's Informant"
-                                    ],
-                                    [
-                                        "1",
-                                        "The Raven Man"
-                                    ],
-                                    [
-                                        "1",
-                                        "Graveyard Trespasser"
-                                    ],
-                                    [
-                                        "1",
-                                        "Toluz, Clever Conductor"
-                                    ],
-                                    [
-                                        "1",
-                                        "Raffine, Scheming Seer"
-                                    ],
-                                    [
-                                        "1",
-                                        "Obscura Interceptor"
-                                    ],
-                                    [
-                                        "1",
-                                        "Body Launderer"
-                                    ],
-                                    [
-                                        "1",
-                                        "Sheoldred, the Apocalypse"
-                                    ],
-                                    [
-                                        "1",
-                                        "Ao, the Dawn Sky"
-                                    ],
-                                    [
-                                        "1",
-                                        "Steel Seraph"
-                                    ],
-                                    [
-                                        "1",
-                                        "Sanctuary Warden"
-                                    ],
-                                    [
-                                        "1",
-                                        "Phyrexian Fleshgorger"
-                                    ],
-                                    [
-                                        "1",
-                                        "Spell Pierce"
-                                    ],
-                                    [
-                                        "1",
-                                        "Consider"
-                                    ],
-                                    [
-                                        "1",
-                                        "Fading Hope"
-                                    ],
-                                    [
-                                        "1",
-                                        "Wash Away"
-                                    ],
-                                    [
-                                        "1",
-                                        "Cut Down"
-                                    ],
-                                    [
-                                        "1",
-                                        "Rona's Vortex"
-                                    ],
-                                    [
-                                        "1",
-                                        "Negate"
-                                    ],
-                                    [
-                                        "1",
-                                        "Go for the Throat"
-                                    ],
-                                    [
-                                        "1",
-                                        "Essence Scatter"
-                                    ],
-                                    [
-                                        "1",
-                                        "Make Disappear"
-                                    ],
-                                    [
-                                        "1",
-                                        "Tainted Indulgence"
-                                    ],
-                                    [
-                                        "1",
-                                        "Duress"
-                                    ],
-                                    [
-                                        "1",
-                                        "The Celestus"
-                                    ],
-                                    [
-                                        "1",
-                                        "The Modern Age"
-                                    ],
-                                    [
-                                        "1",
-                                        "Wedding Announcement"
-                                    ],
-                                    [
-                                        "1",
-                                        "The Restoration of Eiganjo"
-                                    ],
-                                    [
-                                        "2",
-                                        "Island"
-                                    ],
-                                    [
-                                        "2",
-                                        "Plains"
-                                    ],
-                                    [
-                                        "4",
-                                        "Swamp"
-                                    ],
-                                    [
-                                        "1",
-                                        "Adarkar Wastes"
-                                    ],
-                                    [
-                                        "1",
-                                        "Underground River"
-                                    ],
-                                    [
-                                        "1",
-                                        "Caves of Koilos"
-                                    ],
-                                    [
-                                        "1",
-                                        "Seachrome Coast"
-                                    ],
-                                    [
-                                        "1",
-                                        "Darkslick Shores"
-                                    ],
-                                    [
-                                        "1",
-                                        "Tranquil Cove"
-                                    ],
-                                    [
-                                        "1",
-                                        "Scoured Barrens"
-                                    ],
-                                    [
-                                        "1",
-                                        "Dismal Backwater"
-                                    ],
-                                    [
-                                        "1",
-                                        "Deserted Beach"
-                                    ],
-                                    [
-                                        "1",
-                                        "Shattered Sanctum"
-                                    ],
-                                    [
-                                        "1",
-                                        "Shipwreck Marsh"
-                                    ],
-                                    [
-                                        "1",
-                                        "Skybridge Towers"
-                                    ],
-                                    [
-                                        "1",
-                                        "Waterfront District"
-                                    ],
-                                    [
-                                        "1",
-                                        "Xander's Lounge"
-                                    ],
-                                    [
-                                        "1",
-                                        "Raffine's Tower"
-                                    ],
-                                    [
-                                        "1",
-                                        "Eiganjo, Seat of the Empire"
-                                    ],
-                                    [
-                                        "1",
-                                        "Otawara, Soaring City"
-                                    ],
-                                    [
-                                        "1",
-                                        "Takenuma, Abandoned Mire"
-                                    ]
+{
+    "date": "February 13, 2023",
+    "item_type": "article",
+    "id_": "post-172366",
+    "content": [
+        {
+            "date": "February 13, 2023",
+            "item_type": "section",
+            "id_": "a6007b51-e3c8-4859-a2da-a47a978c1730",
+            "content": [
+                {
+                    "date": "February 13, 2023",
+                    "item_type": "block",
+                    "id_": "6d07f78e-63b6-4298-8937-2db37d9cbeff",
+                    "format_": "standard",
+                    "text": "With Phyrexia: All Will Be One\u2019s release, we have five festival events to play in to celebrate! Battle your way through Singleton events with different emblems in order to claim as many ichor card styles as you can! Today, I\u2019ll be covering the first event, The Autonomous Furnace."
+                }
+            ],
+            "format_": "standard",
+            "title": "",
+            "level": 10000
+        },
+        {
+            "date": "February 13, 2023",
+            "item_type": "section",
+            "id_": "0955e8d5-2768-4f6e-931b-7989a0532235",
+            "content": [
+                {
+                    "date": "February 13, 2023",
+                    "item_type": "block",
+                    "id_": "38f520ef-995d-4ef8-b173-7c540fe45ea6",
+                    "format_": "standard",
+                    "text": "Dates: February 13, 2023 8AM PST \u2013 February 16, 2023 8AM PST\nEntry: 2,500 Gold or 500 gems\nFormat: Singleton with The Autonomous Furnace Emblem\nStructure: Play as much as you want until the event ends."
+                },
+                {
+                    "date": "February 13, 2023",
+                    "item_type": "section",
+                    "id_": "e2918509-e79e-47bd-944f-104a443b8bab",
+                    "content": [
+                        {
+                            "date": "February 13, 2023",
+                            "item_type": "block",
+                            "id_": "48b5c7cd-16ec-4567-8434-cb8c8f4f6528",
+                            "format_": "standard",
+                            "text": "Whenever you discard one or more nonland cards, you may exile one of them from your graveyard. If you do, you may cast it this turn."
+                        }
+                    ],
+                    "format_": "standard",
+                    "title": "The Autonomous Furnace Emblem",
+                    "level": 3
+                }
+            ],
+            "format_": "standard",
+            "title": "Event Details",
+            "level": 2
+        },
+        {
+            "date": "February 13, 2023",
+            "item_type": "section",
+            "id_": "eb66a1b3-3a7d-42a0-b936-d4ae71d354d0",
+            "content": [
+                {
+                    "date": "February 13, 2023",
+                    "item_type": "block",
+                    "id_": "2ec3239c-882f-41dc-a91c-a9b14a67a044",
+                    "format_": "standard",
+                    "text": "Wins Rewards\n5 Wins Solphim, Mayhem Dominus ichor card style\n4 Wins Capricious Hellraiser ichor card style\n3 Wins Slobad, Iron Goblin ichor card style\n2 Wins Urabrask's Anointer ichor card style\n1 Win Sawblade Scamp ichor card style"
+                }
+            ],
+            "format_": "standard",
+            "title": "Event Rewards",
+            "level": 2
+        },
+        {
+            "date": "February 13, 2023",
+            "item_type": "section",
+            "id_": "bc535fd6-f228-4420-8b20-bd4f01f898ca",
+            "content": [
+                {
+                    "date": "February 13, 2023",
+                    "item_type": "block",
+                    "id_": "fedb7bcf-cfa8-42a0-a78f-6ef6c79cba80",
+                    "format_": "standard",
+                    "text": "While there have been many events where the emblem didn\u2019t have much bearing on how to construct decks, this is not one of those events. This emblem is extremely powerful and should be utilized to the fullest!"
+                },
+                {
+                    "date": "February 13, 2023",
+                    "item_type": "section",
+                    "id_": "d3c5975a-c882-46ab-8638-163d17704a9a",
+                    "content": [
+                        {
+                            "date": "February 13, 2023",
+                            "item_type": "decklist",
+                            "id_": "4b9c791c-8d83-4046-9bbf-8599d50ef7b7",
+                            "format_": "standard",
+                            "title": "Esper Midrange",
+                            "deck": [
+                                [
+                                    "1",
+                                    "Kaito Shizuki"
                                 ],
-                                "sideboard": null,
-                                "archetype": null,
-                                "best_of": 1
-                            },
-                            {
-                                "date": "February 13, 2023",
-                                "item_type": "block",
-                                "id_": "9c1dbf0c-1313-44ba-bb13-53cbc5ff46b5",
-                                "format_": "standard",
-                                "text": "For an event all about Discard, hard to go wrong with Connive! While three color decks are a bit hard to pull off in Singleton, getting access to all the Connive possible gives you as much card advantage and selection as you could hope for!"
-                            }
-                        ],
-                        "format_": "standard",
-                        "title": "Esper Midrange",
-                        "level": 3
-                    },
-                    {
-                        "date": "February 13, 2023",
-                        "item_type": "section",
-                        "id_": "f4377807-461b-42a5-a134-32232fc06c73",
-                        "content": [
-                            {
-                                "date": "February 13, 2023",
-                                "item_type": "decklist",
-                                "id_": "8dd81302-d212-4df0-bd8a-f361d5e73fb3",
-                                "format_": "standard",
-                                "title": "Rakdos Midrange",
-                                "deck": [
-                                    [
-                                        "1",
-                                        "Liliana of the Veil"
-                                    ],
-                                    [
-                                        "1",
-                                        "Ob Nixilis, the Adversary"
-                                    ],
-                                    [
-                                        "1",
-                                        "Vraska, Betrayal's Sting"
-                                    ],
-                                    [
-                                        "1",
-                                        "Reinforced Ronin"
-                                    ],
-                                    [
-                                        "1",
-                                        "Evolved Sleeper"
-                                    ],
-                                    [
-                                        "1",
-                                        "Cult Conscript"
-                                    ],
-                                    [
-                                        "1",
-                                        "Voldaren Epicure"
-                                    ],
-                                    [
-                                        "1",
-                                        "Tenacious Underdog"
-                                    ],
-                                    [
-                                        "1",
-                                        "Misery's Shadow"
-                                    ],
-                                    [
-                                        "1",
-                                        "Bloodtithe Harvester"
-                                    ],
-                                    [
-                                        "1",
-                                        "Voldaren Bloodcaster"
-                                    ],
-                                    [
-                                        "1",
-                                        "The Raven Man"
-                                    ],
-                                    [
-                                        "1",
-                                        "Phyrexian Dragon Engine"
-                                    ],
-                                    [
-                                        "1",
-                                        "Graveyard Trespasser"
-                                    ],
-                                    [
-                                        "1",
-                                        "Florian, Voldaren Scion"
-                                    ],
-                                    [
-                                        "1",
-                                        "Twinshot Sniper"
-                                    ],
-                                    [
-                                        "1",
-                                        "Jaxis, the Troublemaker"
-                                    ],
-                                    [
-                                        "1",
-                                        "Mishra, Claimed by Gix"
-                                    ],
-                                    [
-                                        "1",
-                                        "Sheoldred, the Apocalypse"
-                                    ],
-                                    [
-                                        "1",
-                                        "Anje, Maid of Dishonor"
-                                    ],
-                                    [
-                                        "1",
-                                        "Junji, the Midnight Sky"
-                                    ],
-                                    [
-                                        "1",
-                                        "Bladecoil Serpent"
-                                    ],
-                                    [
-                                        "1",
-                                        "Phyrexian Fleshgorger"
-                                    ],
-                                    [
-                                        "1",
-                                        "Cut Down"
-                                    ],
-                                    [
-                                        "1",
-                                        "Go for the Throat"
-                                    ],
-                                    [
-                                        "1",
-                                        "Thrill of Possibility"
-                                    ],
-                                    [
-                                        "1",
-                                        "Infernal Grasp"
-                                    ],
-                                    [
-                                        "1",
-                                        "Duress"
-                                    ],
-                                    [
-                                        "1",
-                                        "Strangle"
-                                    ],
-                                    [
-                                        "1",
-                                        "Blood Fountain"
-                                    ],
-                                    [
-                                        "1",
-                                        "The Celestus"
-                                    ],
-                                    [
-                                        "1",
-                                        "Phyrexian Arena"
-                                    ],
-                                    [
-                                        "1",
-                                        "Fable of the Mirror-Breaker"
-                                    ],
-                                    [
-                                        "1",
-                                        "The Elder Dragon War"
-                                    ],
-                                    [
-                                        "1",
-                                        "The Cruelty of Gix"
-                                    ],
-                                    [
-                                        "7",
-                                        "Mountain"
-                                    ],
-                                    [
-                                        "9",
-                                        "Swamp"
-                                    ],
-                                    [
-                                        "1",
-                                        "Sulfurous Springs"
-                                    ],
-                                    [
-                                        "1",
-                                        "Blackcleave Cliffs"
-                                    ],
-                                    [
-                                        "1",
-                                        "Bloodfell Caves"
-                                    ],
-                                    [
-                                        "1",
-                                        "Haunted Ridge"
-                                    ],
-                                    [
-                                        "1",
-                                        "Tramway Station"
-                                    ],
-                                    [
-                                        "1",
-                                        "Xander's Lounge"
-                                    ],
-                                    [
-                                        "1",
-                                        "Geothermal Bog"
-                                    ],
-                                    [
-                                        "1",
-                                        "Takenuma, Abandoned Mire"
-                                    ],
-                                    [
-                                        "1",
-                                        "Sokenzan, Crucible of Defiance"
-                                    ]
+                                [
+                                    "1",
+                                    "Liliana of the Veil"
                                 ],
-                                "sideboard": null,
-                                "archetype": null,
-                                "best_of": 1
-                            },
-                            {
-                                "date": "February 13, 2023",
-                                "item_type": "block",
-                                "id_": "def96cba-7bd3-4008-880c-1c78965d8181",
-                                "format_": "standard",
-                                "text": "While you can\u2019t utilize Connive as much here, we can use a different discard heavy theme \u2013 Blood! Rakdos will have a cleaner curve and mana, and while the deck may be a smidge weaker than Esper, the consistency should make up for it."
-                            }
-                        ],
-                        "format_": "standard",
-                        "title": "Rakdos Midrange",
-                        "level": 3
-                    },
-                    {
-                        "date": "February 13, 2023",
-                        "item_type": "section",
-                        "id_": "012af735-5cbe-46ee-8ee1-bd1bfb7a21a8",
-                        "content": [
-                            {
-                                "date": "February 13, 2023",
-                                "item_type": "decklist",
-                                "id_": "413e681d-2d2c-4437-8e98-3f3a8d944efb",
-                                "format_": "standard",
-                                "title": "Mono Red Aggro",
-                                "deck": [
-                                    [
-                                        "1",
-                                        "Chandra, Dressed to Kill"
-                                    ],
-                                    [
-                                        "1",
-                                        "Jaya, Fiery Negotiator"
-                                    ],
-                                    [
-                                        "1",
-                                        "Rabbit Battery"
-                                    ],
-                                    [
-                                        "1",
-                                        "Reinforced Ronin"
-                                    ],
-                                    [
-                                        "1",
-                                        "Goldhound"
-                                    ],
-                                    [
-                                        "1",
-                                        "Monastery Swiftspear"
-                                    ],
-                                    [
-                                        "1",
-                                        "Phoenix Chick"
-                                    ],
-                                    [
-                                        "1",
-                                        "Voldaren Epicure"
-                                    ],
-                                    [
-                                        "1",
-                                        "Falkenrath Pit Fighter"
-                                    ],
-                                    [
-                                        "1",
-                                        "Scrapwork Mutt"
-                                    ],
-                                    [
-                                        "1",
-                                        "Lizard Blades"
-                                    ],
-                                    [
-                                        "1",
-                                        "Ogre-Head Helm"
-                                    ],
-                                    [
-                                        "1",
-                                        "Radha's Firebrand"
-                                    ],
-                                    [
-                                        "1",
-                                        "Bloodthirsty Adversary"
-                                    ],
-                                    [
-                                        "1",
-                                        "Blood Petal Celebrant"
-                                    ],
-                                    [
-                                        "1",
-                                        "Riveteers Requisitioner"
-                                    ],
-                                    [
-                                        "1",
-                                        "Goro-Goro, Disciple of Ryusei"
-                                    ],
-                                    [
-                                        "1",
-                                        "Feldon, Ronom Excavator"
-                                    ],
-                                    [
-                                        "1",
-                                        "Phyrexian Dragon Engine"
-                                    ],
-                                    [
-                                        "1",
-                                        "Reckless Stormseeker"
-                                    ],
-                                    [
-                                        "1",
-                                        "Squee, Dubious Monarch"
-                                    ],
-                                    [
-                                        "1",
-                                        "Defiler of Instinct"
-                                    ],
-                                    [
-                                        "1",
-                                        "Thundering Raiju"
-                                    ],
-                                    [
-                                        "1",
-                                        "Jaxis, the Troublemaker"
-                                    ],
-                                    [
-                                        "1",
-                                        "Solphim, Mayhem Dominus"
-                                    ],
-                                    [
-                                        "1",
-                                        "Play with Fire"
-                                    ],
-                                    [
-                                        "1",
-                                        "Lightning Strike"
-                                    ],
-                                    [
-                                        "1",
-                                        "Thrill of Possibility"
-                                    ],
-                                    [
-                                        "1",
-                                        "End the Festivities"
-                                    ],
-                                    [
-                                        "1",
-                                        "Strangle"
-                                    ],
-                                    [
-                                        "1",
-                                        "Reckless Impulse"
-                                    ],
-                                    [
-                                        "1",
-                                        "Bloody Betrayal"
-                                    ],
-                                    [
-                                        "1",
-                                        "Hammerhand"
-                                    ],
-                                    [
-                                        "1",
-                                        "Sticky Fingers"
-                                    ],
-                                    [
-                                        "1",
-                                        "Kumano Faces Kakkazan"
-                                    ],
-                                    [
-                                        "1",
-                                        "Mechanized Warfare"
-                                    ],
-                                    [
-                                        "1",
-                                        "Fable of the Mirror-Breaker"
-                                    ],
-                                    [
-                                        "21",
-                                        "Mountain"
-                                    ],
-                                    [
-                                        "1",
-                                        "Mishra's Foundry"
-                                    ],
-                                    [
-                                        "1",
-                                        "Sokenzan, Crucible of Defiance"
-                                    ]
+                                [
+                                    "1",
+                                    "The Wandering Emperor"
                                 ],
-                                "sideboard": null,
-                                "archetype": null,
-                                "best_of": 1
-                            },
-                            {
-                                "date": "February 13, 2023",
-                                "item_type": "block",
-                                "id_": "30298a31-ab24-4bee-a529-bb8f7c8378cc",
-                                "format_": "standard",
-                                "text": "For the final recommendation, why try to fight an attrition war when you could just kill the opponent? Since most players won\u2019t have access to much removal, just having a lean curve and a few Blood cards to take advantage of the emblem seems like a good place to be!"
-                            }
-                        ],
-                        "format_": "standard",
-                        "title": "Mono Red Aggro",
-                        "level": 3
-                    }
-                ],
-                "format_": "standard",
-                "title": "The Autonomous Furnace Decklists",
-                "level": 2
-            }
-        ],
-        "formats": [
-            "standard"
-        ],
-        "title": "Welcome To Phyrexia Festival: The Autonomous Furnace Event Guide and Decklists",
-        "url": "https://mtgazone.com/the-autonomous-furnace-event-guide-and-decklists/",
-        "tags": [
-            "festival"
-        ],
-        "author": "DoggertQBones",
-        "length": 4
-    }
-]
+                                [
+                                    "1",
+                                    "Skrelv, Defector Mite"
+                                ],
+                                [
+                                    "1",
+                                    "Ledger Shredder"
+                                ],
+                                [
+                                    "1",
+                                    "Suspicious Stowaway"
+                                ],
+                                [
+                                    "1",
+                                    "Raffine's Informant"
+                                ],
+                                [
+                                    "1",
+                                    "The Raven Man"
+                                ],
+                                [
+                                    "1",
+                                    "Graveyard Trespasser"
+                                ],
+                                [
+                                    "1",
+                                    "Toluz, Clever Conductor"
+                                ],
+                                [
+                                    "1",
+                                    "Raffine, Scheming Seer"
+                                ],
+                                [
+                                    "1",
+                                    "Obscura Interceptor"
+                                ],
+                                [
+                                    "1",
+                                    "Body Launderer"
+                                ],
+                                [
+                                    "1",
+                                    "Sheoldred, the Apocalypse"
+                                ],
+                                [
+                                    "1",
+                                    "Ao, the Dawn Sky"
+                                ],
+                                [
+                                    "1",
+                                    "Steel Seraph"
+                                ],
+                                [
+                                    "1",
+                                    "Sanctuary Warden"
+                                ],
+                                [
+                                    "1",
+                                    "Phyrexian Fleshgorger"
+                                ],
+                                [
+                                    "1",
+                                    "Spell Pierce"
+                                ],
+                                [
+                                    "1",
+                                    "Consider"
+                                ],
+                                [
+                                    "1",
+                                    "Fading Hope"
+                                ],
+                                [
+                                    "1",
+                                    "Wash Away"
+                                ],
+                                [
+                                    "1",
+                                    "Cut Down"
+                                ],
+                                [
+                                    "1",
+                                    "Rona's Vortex"
+                                ],
+                                [
+                                    "1",
+                                    "Negate"
+                                ],
+                                [
+                                    "1",
+                                    "Go for the Throat"
+                                ],
+                                [
+                                    "1",
+                                    "Essence Scatter"
+                                ],
+                                [
+                                    "1",
+                                    "Make Disappear"
+                                ],
+                                [
+                                    "1",
+                                    "Tainted Indulgence"
+                                ],
+                                [
+                                    "1",
+                                    "Duress"
+                                ],
+                                [
+                                    "1",
+                                    "The Celestus"
+                                ],
+                                [
+                                    "1",
+                                    "The Modern Age"
+                                ],
+                                [
+                                    "1",
+                                    "Wedding Announcement"
+                                ],
+                                [
+                                    "1",
+                                    "The Restoration of Eiganjo"
+                                ],
+                                [
+                                    "2",
+                                    "Island"
+                                ],
+                                [
+                                    "2",
+                                    "Plains"
+                                ],
+                                [
+                                    "4",
+                                    "Swamp"
+                                ],
+                                [
+                                    "1",
+                                    "Adarkar Wastes"
+                                ],
+                                [
+                                    "1",
+                                    "Underground River"
+                                ],
+                                [
+                                    "1",
+                                    "Caves of Koilos"
+                                ],
+                                [
+                                    "1",
+                                    "Seachrome Coast"
+                                ],
+                                [
+                                    "1",
+                                    "Darkslick Shores"
+                                ],
+                                [
+                                    "1",
+                                    "Tranquil Cove"
+                                ],
+                                [
+                                    "1",
+                                    "Scoured Barrens"
+                                ],
+                                [
+                                    "1",
+                                    "Dismal Backwater"
+                                ],
+                                [
+                                    "1",
+                                    "Deserted Beach"
+                                ],
+                                [
+                                    "1",
+                                    "Shattered Sanctum"
+                                ],
+                                [
+                                    "1",
+                                    "Shipwreck Marsh"
+                                ],
+                                [
+                                    "1",
+                                    "Skybridge Towers"
+                                ],
+                                [
+                                    "1",
+                                    "Waterfront District"
+                                ],
+                                [
+                                    "1",
+                                    "Xander's Lounge"
+                                ],
+                                [
+                                    "1",
+                                    "Raffine's Tower"
+                                ],
+                                [
+                                    "1",
+                                    "Eiganjo, Seat of the Empire"
+                                ],
+                                [
+                                    "1",
+                                    "Otawara, Soaring City"
+                                ],
+                                [
+                                    "1",
+                                    "Takenuma, Abandoned Mire"
+                                ]
+                            ],
+                            "sideboard": null,
+                            "archetype": null,
+                            "best_of": 1
+                        },
+                        {
+                            "date": "February 13, 2023",
+                            "item_type": "block",
+                            "id_": "9c1dbf0c-1313-44ba-bb13-53cbc5ff46b5",
+                            "format_": "standard",
+                            "text": "For an event all about Discard, hard to go wrong with Connive! While three color decks are a bit hard to pull off in Singleton, getting access to all the Connive possible gives you as much card advantage and selection as you could hope for!"
+                        }
+                    ],
+                    "format_": "standard",
+                    "title": "Esper Midrange",
+                    "level": 3
+                },
+                {
+                    "date": "February 13, 2023",
+                    "item_type": "section",
+                    "id_": "f4377807-461b-42a5-a134-32232fc06c73",
+                    "content": [
+                        {
+                            "date": "February 13, 2023",
+                            "item_type": "decklist",
+                            "id_": "8dd81302-d212-4df0-bd8a-f361d5e73fb3",
+                            "format_": "standard",
+                            "title": "Rakdos Midrange",
+                            "deck": [
+                                [
+                                    "1",
+                                    "Liliana of the Veil"
+                                ],
+                                [
+                                    "1",
+                                    "Ob Nixilis, the Adversary"
+                                ],
+                                [
+                                    "1",
+                                    "Vraska, Betrayal's Sting"
+                                ],
+                                [
+                                    "1",
+                                    "Reinforced Ronin"
+                                ],
+                                [
+                                    "1",
+                                    "Evolved Sleeper"
+                                ],
+                                [
+                                    "1",
+                                    "Cult Conscript"
+                                ],
+                                [
+                                    "1",
+                                    "Voldaren Epicure"
+                                ],
+                                [
+                                    "1",
+                                    "Tenacious Underdog"
+                                ],
+                                [
+                                    "1",
+                                    "Misery's Shadow"
+                                ],
+                                [
+                                    "1",
+                                    "Bloodtithe Harvester"
+                                ],
+                                [
+                                    "1",
+                                    "Voldaren Bloodcaster"
+                                ],
+                                [
+                                    "1",
+                                    "The Raven Man"
+                                ],
+                                [
+                                    "1",
+                                    "Phyrexian Dragon Engine"
+                                ],
+                                [
+                                    "1",
+                                    "Graveyard Trespasser"
+                                ],
+                                [
+                                    "1",
+                                    "Florian, Voldaren Scion"
+                                ],
+                                [
+                                    "1",
+                                    "Twinshot Sniper"
+                                ],
+                                [
+                                    "1",
+                                    "Jaxis, the Troublemaker"
+                                ],
+                                [
+                                    "1",
+                                    "Mishra, Claimed by Gix"
+                                ],
+                                [
+                                    "1",
+                                    "Sheoldred, the Apocalypse"
+                                ],
+                                [
+                                    "1",
+                                    "Anje, Maid of Dishonor"
+                                ],
+                                [
+                                    "1",
+                                    "Junji, the Midnight Sky"
+                                ],
+                                [
+                                    "1",
+                                    "Bladecoil Serpent"
+                                ],
+                                [
+                                    "1",
+                                    "Phyrexian Fleshgorger"
+                                ],
+                                [
+                                    "1",
+                                    "Cut Down"
+                                ],
+                                [
+                                    "1",
+                                    "Go for the Throat"
+                                ],
+                                [
+                                    "1",
+                                    "Thrill of Possibility"
+                                ],
+                                [
+                                    "1",
+                                    "Infernal Grasp"
+                                ],
+                                [
+                                    "1",
+                                    "Duress"
+                                ],
+                                [
+                                    "1",
+                                    "Strangle"
+                                ],
+                                [
+                                    "1",
+                                    "Blood Fountain"
+                                ],
+                                [
+                                    "1",
+                                    "The Celestus"
+                                ],
+                                [
+                                    "1",
+                                    "Phyrexian Arena"
+                                ],
+                                [
+                                    "1",
+                                    "Fable of the Mirror-Breaker"
+                                ],
+                                [
+                                    "1",
+                                    "The Elder Dragon War"
+                                ],
+                                [
+                                    "1",
+                                    "The Cruelty of Gix"
+                                ],
+                                [
+                                    "7",
+                                    "Mountain"
+                                ],
+                                [
+                                    "9",
+                                    "Swamp"
+                                ],
+                                [
+                                    "1",
+                                    "Sulfurous Springs"
+                                ],
+                                [
+                                    "1",
+                                    "Blackcleave Cliffs"
+                                ],
+                                [
+                                    "1",
+                                    "Bloodfell Caves"
+                                ],
+                                [
+                                    "1",
+                                    "Haunted Ridge"
+                                ],
+                                [
+                                    "1",
+                                    "Tramway Station"
+                                ],
+                                [
+                                    "1",
+                                    "Xander's Lounge"
+                                ],
+                                [
+                                    "1",
+                                    "Geothermal Bog"
+                                ],
+                                [
+                                    "1",
+                                    "Takenuma, Abandoned Mire"
+                                ],
+                                [
+                                    "1",
+                                    "Sokenzan, Crucible of Defiance"
+                                ]
+                            ],
+                            "sideboard": null,
+                            "archetype": null,
+                            "best_of": 1
+                        },
+                        {
+                            "date": "February 13, 2023",
+                            "item_type": "block",
+                            "id_": "def96cba-7bd3-4008-880c-1c78965d8181",
+                            "format_": "standard",
+                            "text": "While you can\u2019t utilize Connive as much here, we can use a different discard heavy theme \u2013 Blood! Rakdos will have a cleaner curve and mana, and while the deck may be a smidge weaker than Esper, the consistency should make up for it."
+                        }
+                    ],
+                    "format_": "standard",
+                    "title": "Rakdos Midrange",
+                    "level": 3
+                },
+                {
+                    "date": "February 13, 2023",
+                    "item_type": "section",
+                    "id_": "012af735-5cbe-46ee-8ee1-bd1bfb7a21a8",
+                    "content": [
+                        {
+                            "date": "February 13, 2023",
+                            "item_type": "decklist",
+                            "id_": "413e681d-2d2c-4437-8e98-3f3a8d944efb",
+                            "format_": "standard",
+                            "title": "Mono Red Aggro",
+                            "deck": [
+                                [
+                                    "1",
+                                    "Chandra, Dressed to Kill"
+                                ],
+                                [
+                                    "1",
+                                    "Jaya, Fiery Negotiator"
+                                ],
+                                [
+                                    "1",
+                                    "Rabbit Battery"
+                                ],
+                                [
+                                    "1",
+                                    "Reinforced Ronin"
+                                ],
+                                [
+                                    "1",
+                                    "Goldhound"
+                                ],
+                                [
+                                    "1",
+                                    "Monastery Swiftspear"
+                                ],
+                                [
+                                    "1",
+                                    "Phoenix Chick"
+                                ],
+                                [
+                                    "1",
+                                    "Voldaren Epicure"
+                                ],
+                                [
+                                    "1",
+                                    "Falkenrath Pit Fighter"
+                                ],
+                                [
+                                    "1",
+                                    "Scrapwork Mutt"
+                                ],
+                                [
+                                    "1",
+                                    "Lizard Blades"
+                                ],
+                                [
+                                    "1",
+                                    "Ogre-Head Helm"
+                                ],
+                                [
+                                    "1",
+                                    "Radha's Firebrand"
+                                ],
+                                [
+                                    "1",
+                                    "Bloodthirsty Adversary"
+                                ],
+                                [
+                                    "1",
+                                    "Blood Petal Celebrant"
+                                ],
+                                [
+                                    "1",
+                                    "Riveteers Requisitioner"
+                                ],
+                                [
+                                    "1",
+                                    "Goro-Goro, Disciple of Ryusei"
+                                ],
+                                [
+                                    "1",
+                                    "Feldon, Ronom Excavator"
+                                ],
+                                [
+                                    "1",
+                                    "Phyrexian Dragon Engine"
+                                ],
+                                [
+                                    "1",
+                                    "Reckless Stormseeker"
+                                ],
+                                [
+                                    "1",
+                                    "Squee, Dubious Monarch"
+                                ],
+                                [
+                                    "1",
+                                    "Defiler of Instinct"
+                                ],
+                                [
+                                    "1",
+                                    "Thundering Raiju"
+                                ],
+                                [
+                                    "1",
+                                    "Jaxis, the Troublemaker"
+                                ],
+                                [
+                                    "1",
+                                    "Solphim, Mayhem Dominus"
+                                ],
+                                [
+                                    "1",
+                                    "Play with Fire"
+                                ],
+                                [
+                                    "1",
+                                    "Lightning Strike"
+                                ],
+                                [
+                                    "1",
+                                    "Thrill of Possibility"
+                                ],
+                                [
+                                    "1",
+                                    "End the Festivities"
+                                ],
+                                [
+                                    "1",
+                                    "Strangle"
+                                ],
+                                [
+                                    "1",
+                                    "Reckless Impulse"
+                                ],
+                                [
+                                    "1",
+                                    "Bloody Betrayal"
+                                ],
+                                [
+                                    "1",
+                                    "Hammerhand"
+                                ],
+                                [
+                                    "1",
+                                    "Sticky Fingers"
+                                ],
+                                [
+                                    "1",
+                                    "Kumano Faces Kakkazan"
+                                ],
+                                [
+                                    "1",
+                                    "Mechanized Warfare"
+                                ],
+                                [
+                                    "1",
+                                    "Fable of the Mirror-Breaker"
+                                ],
+                                [
+                                    "21",
+                                    "Mountain"
+                                ],
+                                [
+                                    "1",
+                                    "Mishra's Foundry"
+                                ],
+                                [
+                                    "1",
+                                    "Sokenzan, Crucible of Defiance"
+                                ]
+                            ],
+                            "sideboard": null,
+                            "archetype": null,
+                            "best_of": 1
+                        },
+                        {
+                            "date": "February 13, 2023",
+                            "item_type": "block",
+                            "id_": "30298a31-ab24-4bee-a529-bb8f7c8378cc",
+                            "format_": "standard",
+                            "text": "For the final recommendation, why try to fight an attrition war when you could just kill the opponent? Since most players won\u2019t have access to much removal, just having a lean curve and a few Blood cards to take advantage of the emblem seems like a good place to be!"
+                        }
+                    ],
+                    "format_": "standard",
+                    "title": "Mono Red Aggro",
+                    "level": 3
+                }
+            ],
+            "format_": "standard",
+            "title": "The Autonomous Furnace Decklists",
+            "level": 2
+        }
+    ],
+    "formats": [
+        "standard"
+    ],
+    "title": "Welcome To Phyrexia Festival: The Autonomous Furnace Event Guide and Decklists",
+    "url": "https://mtgazone.com/the-autonomous-furnace-event-guide-and-decklists/",
+    "tags": [
+        "festival"
+    ],
+    "author": "DoggertQBones",
+    "length": 4
+}

@@ -6,7 +6,7 @@ from __future__ import annotations
 import re
 
 from uuid import uuid4
-from typing import List, Tuple
+from typing import List, Tuple, Dict
 from dataclasses import dataclass, field
 
 from mtgscrapper.mtg_format import MTGFORMATS
@@ -49,6 +49,9 @@ class MtgFormat(MtgItem):
     @classmethod
     def from_dict(cls, dict_):
         return cls(**dict_)
+
+    def to_dict(self):
+        return vars(self)
 
 
 @dataclass(kw_only=True)
@@ -111,6 +114,16 @@ class MtgContent(MtgItem):
         cls_args['content'] = content_objects
 
         return cls(**cls_args)
+
+    def to_dict(self) -> Dict:
+        self_dict = vars(self)
+
+        content_dict_list = []
+        for content in self_dict['content']:
+            content_dict_list.append(content.to_dict())
+
+        self_dict['content'] = content_dict_list
+        return self_dict
 
 
 @dataclass(kw_only=True)
