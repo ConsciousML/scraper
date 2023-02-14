@@ -1,5 +1,5 @@
 name: Python Tests
-run-name: ${{ github.actor }} is running python tests"
+run-name: ${{ github.actor }} is running Python Tests
 on: [push]
 
 jobs:
@@ -12,3 +12,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
