@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  build:
+  test-on-main:
     runs-on: ubuntu-latest
 
     strategy:
