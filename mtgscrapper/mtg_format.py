@@ -1,16 +1,26 @@
-from typing import Literal, Dict
+"""This module finds dynamically the Magic The Gathering formats from articles.
 
+For more information on MTG formats:
+https://magic.wizards.com/en/formats
+"""
+from __future__ import annotations
+
+from typing import Literal, Dict, TYPE_CHECKING
 import numpy as np
+
+if TYPE_CHECKING:
+    from mtgscrapper.items import MtgArticle
 
 MTGFORMATS = Literal['limited', 'standard', 'historic', 'alchemy', 'explorer', 'pioneer']
 
 
 class FormatHandler:
+    """Class that finds the MTG formats associated with the content of an article"""
 
     def __init__(self, search_in_text=False) -> None:
         self.search_in_text = search_in_text
 
-    def process_article(self, article: "MtgArticle"):
+    def process_article(self, article: MtgArticle):
         formats = [tag.lower() for tag in article.tags if tag.lower() in MTGFORMATS.__args__]
         article.formats = formats
 
