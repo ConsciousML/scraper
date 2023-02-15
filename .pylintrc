@@ -4,7 +4,7 @@ init-hook='import sys; sys.path.append(".")'
 extension-pkg-whitelist=numpy,pyzed
 
 [MESSAGES CONTROL]
-#disable=
+disable=arguments-differ
 
 [REPORTS]
 

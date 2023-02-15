@@ -1,3 +1,5 @@
+# pylint: skip-file
+
 # Define here the models for your spider middleware
 #
 # See documentation in:

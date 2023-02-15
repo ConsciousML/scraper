@@ -1,3 +1,5 @@
+# pylint: disable-all
+
 # Scrapy settings for mtgscrapper project
 #
 # For simplicity, this file contains only settings considered important or
@@ -11,7 +13,6 @@ BOT_NAME = 'mtgscrapper'
 
 SPIDER_MODULES = ['mtgscrapper.spiders']
 NEWSPIDER_MODULE = 'mtgscrapper.spiders'
-
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'mtgscrapper (+http://www.yourdomain.com)'
