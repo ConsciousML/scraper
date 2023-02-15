@@ -45,3 +45,7 @@ def test_article_load_equal():
 
     assert not deep_equal(original_dict,
                           infered_dict), ('modified article must not be the same as the source.')
+
+
+if __name__ == '__main__':
+    test_article_load_equal()
