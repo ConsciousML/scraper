@@ -1,6 +1,12 @@
 name: Python Tests
 run-name: ${{ github.actor }} is running Python Tests
-on: [push]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build:
