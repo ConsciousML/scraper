@@ -69,5 +69,8 @@ jobs:
       - uses: syphar/restore-virtualenv@v1
         id: cache-virtualenv
 
-      - name: Run Black Formatting
-        run: black --check --verbose --diff .
+      - name: Run PyLint
+        run: pylint $(git ls-files '*.py')
+
+      #- name: Run Black Formatting
+      #  run: black --check --verbose --diff .
