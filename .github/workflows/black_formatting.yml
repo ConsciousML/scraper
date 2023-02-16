@@ -1,0 +1,12 @@
+name: Black Formatting
+run-name: Checking Black Formatting
+on: [push, pull_request]
+jobs:
+  check-black-formatting:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: psf/black@stable
+      with:
+        options: "--check --verbose"
+      
