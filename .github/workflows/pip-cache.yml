@@ -34,7 +34,6 @@ jobs:
           if [ -f setup.py ]; then pip install setuptools && python setup.py install; fi
 
   pytest:
-    needs: [build-pip-cache]
     runs-on: ubuntu-latest
     strategy:
       matrix:
