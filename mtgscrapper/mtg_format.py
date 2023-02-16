@@ -51,10 +51,7 @@ class FormatHandler:
                 article.set_format(format_list[max_key_index])
 
     def process_content(
-        self,
-        content: MtgSection | MtgBlock,
-        known_formats: Dict[MTGFORMATS, int],
-        format_=None
+        self, content: MtgSection | MtgBlock, known_formats: Dict[MTGFORMATS, int], format_=None
     ) -> None:
         """Predicts MTG format from the content of the article"""
         if content.item_type == 'section':
@@ -90,9 +87,9 @@ class FormatHandler:
 
         # Get most occurence of a format name in the text
         if self.search_in_text:
-            format_occurences = np.array([
-                block.text.lower().count(format_) for format_ in MTGFORMATS.__args__
-            ])
+            format_occurences = np.array(
+                [block.text.lower().count(format_) for format_ in MTGFORMATS.__args__]
+            )
             if format_occurences.sum() == 0:
                 return
 
@@ -107,7 +104,7 @@ class FormatHandler:
         self,
         decklist: Decklist,
         known_formats: Dict[MTGFORMATS, int],
-        format_: MTGFORMATS | None = None
+        format_: MTGFORMATS | None = None,
     ) -> None:
         """Adds the format of the decklist to the known_formats
 

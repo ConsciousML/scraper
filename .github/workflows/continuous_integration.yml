@@ -1,5 +1,5 @@
-name: Python Tests
-run-name: ${{ github.actor }} is running Python Tests
+name: Main PR CI
+run-name: Main CI triggered by ${{ github.actor }}.
 on:
   push:
     branches:
@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  test-on-main:
+  pytest:
     runs-on: ubuntu-latest
 
     strategy:
@@ -29,7 +29,7 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      - name: Install MTGScrapper 
+      - name: Install custom package in environment
         run: |
           pip install setuptools
           python setup.py install
@@ -38,5 +38,14 @@ jobs:
         run: |
           pip install pytest
           pytest
+
+  check-black-formatting:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: psf/black@stable
+        with:
+          options: "--check --verbose"
+      
 
 

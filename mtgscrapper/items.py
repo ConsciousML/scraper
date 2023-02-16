@@ -13,6 +13,7 @@ from mtgscrapper.mtg_format import MTGFORMATS
 @dataclass(kw_only=True)
 class MtgItem:
     """Abstract class for any Magic the Gathering Item"""
+
     date: str
     item_type: str
     id_: str | None = None
@@ -25,6 +26,7 @@ class MtgItem:
 @dataclass(kw_only=True)
 class MtgTitle(MtgItem):
     """Class that has a title"""
+
     title: str
 
     def __post_init__(self):
@@ -39,10 +41,11 @@ class MtgTitle(MtgItem):
 @dataclass(kw_only=True)
 class MtgFormat(MtgItem):
     """Class that belongs to a given format
-    
+
     For more information on Magic The Gathering Formats follow this link:
     https://magic.wizards.com/en/formats
     """
+
     format_: MTGFORMATS | None = None
 
     def __post_init__(self):
@@ -62,6 +65,7 @@ class MtgFormat(MtgItem):
 @dataclass(kw_only=True)
 class MtgMultiFormat(MtgItem):
     """Class for objects than can contain multiple formats such as Articles"""
+
     formats: List[MTGFORMATS] | None = None
 
     def __post_init__(self):
@@ -74,9 +78,10 @@ class MtgMultiFormat(MtgItem):
 @dataclass(kw_only=True)
 class MtgContent(MtgItem):
     """Class that contains nested MtgItem such as Articles or Section
-    
+
     For example, a section can contain multiple blocks, sections or decklists.
     """
+
     content: List[MtgSection | MtgBlock] = field(default_factory=list)  # List of ids
     length = 0
 
@@ -110,7 +115,7 @@ class MtgContent(MtgItem):
     @classmethod
     def from_dict(cls, dict_: Dict) -> MtgContent:
         """Create an instance of the class from a dictionary
-        
+
         Useful to load crawled content save in the json format.
         """
         cls_args = dict_.copy()
@@ -145,6 +150,7 @@ class MtgContent(MtgItem):
 @dataclass(kw_only=True)
 class MtgArticle(MtgTitle, MtgMultiFormat, MtgContent):
     """Class containing all the information of a Magic The Gathering article"""
+
     url: str
     tags: List[str]
     author: str
@@ -171,9 +177,11 @@ class MtgArticle(MtgTitle, MtgMultiFormat, MtgContent):
         string += ''.join([str(section) for section in self.content])
         return string
 
+
 @dataclass(kw_only=True)
 class MtgSection(MtgContent, MtgTitle, MtgFormat):
     """Class materializing the Section of an Article"""
+
     content: List[MtgBlock | MtgSection] = field(default_factory=list)
     item_type: str = 'section'
     level: int
@@ -200,9 +208,10 @@ class MtgSection(MtgContent, MtgTitle, MtgFormat):
 @dataclass(kw_only=True)
 class MtgBlock(MtgFormat):
     """A block can be a paragraph of a card
-    
+
     Must belong to a Mtg format
     """
+
     text: str
     item_type: str = 'block'
 
@@ -217,6 +226,7 @@ class MtgBlock(MtgFormat):
 @dataclass(kw_only=True)
 class MtgCard(MtgBlock):
     """Contains the information of a Mtg card"""
+
     cost: str
     cart_type: str
     set: str
@@ -228,9 +238,10 @@ class MtgCard(MtgBlock):
 @dataclass(kw_only=True)
 class Decklist(MtgTitle, MtgFormat):
     """Contains information of a Mtg deck
-    
+
     A deck contains (usually) 60 cards in the main deck and 15 cards in the sideboard (optional).
     """
+
     deck: List[Tuple[int, str]]
     sideboard: List[Tuple[int, str]] | None = None
     archetype: str | None = None

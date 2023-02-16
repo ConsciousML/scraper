@@ -11,16 +11,12 @@ from mtgscrapper.mtg_format import FormatHandler
 
 class MTGArenaZoneSpider(Spider):
     """Scrapy Spider to crawl the MTGAZone website"""
+
     name = 'mtgazone'
     start_urls = ['https://mtgazone.com/articles/']
 
     def __init__(
-        self,
-        *args,
-        forbidden_tags=None,
-        forbidden_titles=None,
-        parse_article=True,
-        **kwargs
+        self, *args, forbidden_tags=None, forbidden_titles=None, parse_article=True, **kwargs
     ) -> None:
         super().__init__(*args, **kwargs)
         self.forbidden_tags = forbidden_tags or ['Premium']
@@ -33,20 +29,20 @@ class MTGArenaZoneSpider(Spider):
 
     def parse(self, response) -> Generator[Dict, None, None]:
         """Overrides parse method of the scrapy.Spider class
-        
+
         Parses the articles from the MTGAZone website and runs a spider to crawl the content of the
         article
         """
         for article_selector in response.xpath('//article[contains(@class, "entry-card post")]'):
-
             title_selector = article_selector.xpath('h2[@class="entry-title"]')
 
             article_title = title_selector.xpath('a/text()').get().strip()
             if not self.filter_title(article_title):
                 continue
 
-            article_tags = article_selector.xpath('./ul[@data-type="simple:none"]/li/a/text()'
-                                                  ).getall()
+            article_tags = article_selector.xpath(
+                './ul[@data-type="simple:none"]/li/a/text()'
+            ).getall()
             if not self.filter_tags(article_tags):
                 continue
 
@@ -62,7 +58,7 @@ class MTGArenaZoneSpider(Spider):
                 date=article_date,
                 url=article_url,
                 tags=article_tags,
-                author=author_name
+                author=author_name,
             )
             if self.parse_article:
                 yield response.follow(
@@ -77,7 +73,7 @@ class MTGArenaZoneSpider(Spider):
 
     def parse_article_content(self, response, article: MtgArticle) -> Generator[Dict, None, None]:
         """Crawls the content of an article
-        
+
         Fills the 'content' attribute of the article and return the article as a dictionary
         """
         response.xpath('//div[contains(@class, "page-description")]/text()').get()
@@ -102,7 +98,7 @@ class MTGArenaZoneSpider(Spider):
                     MtgSection(
                         date=article.date,
                         title=''.join(selector.xpath('.//text()').getall()),
-                        level=int(block_tag[1:])
+                        level=int(block_tag[1:]),
                     )
                 )
             else:
@@ -115,17 +111,14 @@ class MTGArenaZoneSpider(Spider):
                     if block_tag == 'figure':
                         paragraph = ''
                         for row in selector.xpath('.//tr'):
-                            paragraph += ' '.join([
-                                elt.strip() for elt in row.xpath('.//text()').getall()
-                            ]) + '\n'
+                            paragraph += (
+                                ' '.join([elt.strip() for elt in row.xpath('.//text()').getall()])
+                                + '\n'
+                            )
 
                     else:
                         paragraph = ''.join(selector.xpath('.//text()').getall())
-                    element = MtgBlock(
-                        date=article.date,
-                        format_=None,
-                        text=paragraph,
-                    )
+                    element = MtgBlock(date=article.date, format_=None, text=paragraph)
 
                 section_list[-1].content.append(element)
 
@@ -171,7 +164,7 @@ class MTGArenaZoneSpider(Spider):
             deck=self.parse_cards(selector.xpath('.//div[@class="decklist main"]')),
             sideboard=self.parse_cards(selector.xpath('.//div[@class="decklist sideboard"]')),
             archetype=selector.xpath('.//div[@class="archetype"]/text()').get(),
-            best_of=best_of
+            best_of=best_of,
         )
 
     def parse_cards(self, selector: Selector) -> List[Tuple]:
@@ -180,7 +173,7 @@ class MTGArenaZoneSpider(Spider):
             './/div[contains(@class,"card")]/@*[name()="data-quantity" or name()="data-name"]'
         ).getall()
 
-        card_pairs = [card_list[i:i + 2] for i in range(0, len(card_list), 2)]
+        card_pairs = [card_list[i : i + 2] for i in range(0, len(card_list), 2)]
 
         return card_pairs if len(card_pairs) > 0 else None
 

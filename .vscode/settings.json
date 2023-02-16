@@ -15,7 +15,7 @@
     ],
     "python.linting.pylintEnabled": true,
     "python.linting.enabled": true,
-    "python.formatting.provider": "yapf",
+    "python.formatting.provider": "black",
     "editor.semanticHighlighting.enabled": false,
     "python.languageServer": "Pylance",
     "editor.bracketPairColorization.enabled": false
