@@ -84,5 +84,3 @@ jobs:
       - uses: psf/black@stable
         with:
           options: "--check --verbose"
-      #- name: Run Black Formatting
-      #  run: black --check --verbose --diff .
