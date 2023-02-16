@@ -70,4 +70,4 @@ jobs:
         id: cache-virtualenv
 
       - name: Run Black Formatting
-      - run: black --check --verbose --diff .
+        run: black --check --verbose --diff .
