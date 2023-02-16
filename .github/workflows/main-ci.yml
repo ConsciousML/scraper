@@ -1,5 +1,5 @@
-name: pip-cache
-run-name: Test Pip Cache by ${{ github.actor }}.
+name: main-ci
+run-name: Running Main CI by ${{ github.actor }}.
 on:
   pull_request:
     branches:
