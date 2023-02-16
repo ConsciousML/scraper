@@ -1,10 +1,13 @@
+"""Tests for the MtgArticle class"""
 import os
 import json
+from typing import Any
 
 from mtgscrapper.items import MtgArticle
 
 
-def deep_equal(element_1, element_2) -> bool:
+def deep_equal(element_1: Any, element_2: Any) -> bool:
+    """Tests if two object are equal, runs recursively if the object contains other objects"""
     if not isinstance(element_1, type(element_2)):
         return False
 
@@ -29,7 +32,12 @@ def deep_equal(element_1, element_2) -> bool:
     return True
 
 
-def test_article_load_equal():
+def test_article_load_equal() -> None:
+    """
+    - loads an article from json
+    - create a MtgArticle class object
+    - dump object to dict
+    - compare original and dumped dict"""
     test_filepath = os.path.join('data', 'test_article.json')
 
     with open(test_filepath, 'r') as json_file:
