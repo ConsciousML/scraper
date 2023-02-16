@@ -15,15 +15,22 @@ jobs:
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v4
+        id: setup-python
         with:
           python-version: ${{ matrix.python-version }}
+          python-version-file: '.python-version'
 
-      - name: Install requirements.txt
+      - uses: actions/cache@v3
+        with:
+          path: venv
+          key: ${{ runner.os }}-venv-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/*requirements.txt') }} # (1)
+
+      - name: Install dependencies
+        if: steps.cache-primes.outputs.cache-hit != 'true'
         run: |
+          python -m venv venv
+          . venv/bin/activate
+
           python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-
-      - name: Install custom package in environment
-        run: |
-          pip install setuptools
-          python setup.py install
+          if [ -f requirements.txt ]; then pip-sync requirements.txt; fi
+          if [ -f setup.py ]; then pip install setuptools && python setup.py install; fi
