@@ -10,6 +10,5 @@ from itemadapter import ItemAdapter
 
 
 class MtgscrapperPipeline:
-
     def process_item(self, item, spider):
         return item
