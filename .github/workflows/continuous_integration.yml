@@ -1,9 +1,6 @@
 name: Main PR CI
 run-name: Main CI triggered by ${{ github.actor }}.
 on:
-  push:
-    branches:
-      - main
   pull_request:
     branches:
       - main
