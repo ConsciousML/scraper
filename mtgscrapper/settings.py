@@ -1,3 +1,4 @@
+# type: ignore
 # pylint: disable-all
 
 # Scrapy settings for mtgscrapper project

@@ -1,3 +1,4 @@
+# type: ignore
 # pylint: disable-all
 
 # Define your item pipelines here

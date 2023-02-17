@@ -5,24 +5,22 @@ https://magic.wizards.com/en/formats
 """
 from __future__ import annotations
 
-from typing import Literal, Dict, TYPE_CHECKING
+from typing import Dict
 import numpy as np
 
-if TYPE_CHECKING:
-    from mtgscrapper.items import MtgArticle, MtgBlock, MtgSection, Decklist
-
-MTGFORMATS = Literal['limited', 'standard', 'historic', 'alchemy', 'explorer', 'pioneer']
+from mtgscrapper.items import MtgArticle, MtgBlock, MtgSection, Decklist
+from mtgscrapper.mtg_format_enum import MtgFormatEnum
 
 
 class FormatHandler:
     """Class that finds the MTG formats associated with the content of an article"""
 
-    def __init__(self, search_in_text=False) -> None:
+    def __init__(self, search_in_text: bool = False) -> None:
         self.search_in_text = search_in_text
 
     def process_article(self, article: MtgArticle) -> None:
         """Predicts MTG formats from article content"""
-        formats = [tag.lower() for tag in article.tags if tag.lower() in MTGFORMATS.__args__]
+        formats = [MtgFormatEnum(tag) for tag in article.tags if MtgFormatEnum.is_format(tag)]
         article.formats = formats
 
         known_formats = {format_: 0 for format_ in formats}
@@ -51,18 +49,24 @@ class FormatHandler:
                 article.set_format(format_list[max_key_index])
 
     def process_content(
-        self, content: MtgSection | MtgBlock, known_formats: Dict[MTGFORMATS, int], format_=None
+        self,
+        content: MtgSection | MtgBlock | Decklist,
+        known_formats: Dict[MtgFormatEnum, int],
+        format_: MtgFormatEnum | None = None,
     ) -> None:
         """Predicts MTG format from the content of the article"""
-        if content.item_type == 'section':
+        if isinstance(content, MtgSection):
             self.process_section(content, known_formats, format_=format_)
-        elif content.item_type == 'block':
+        elif isinstance(content, MtgBlock):
             self.process_block(content, known_formats, format_=format_)
-        elif content.item_type == 'decklist':
+        elif isinstance(content, Decklist):
             self.process_decklist(content, known_formats, format_=format_)
 
     def process_section(
-        self, section: MtgSection, known_formats: Dict[MTGFORMATS, int], format_=None
+        self,
+        section: MtgSection,
+        known_formats: Dict[MtgFormatEnum, int],
+        format_: MtgFormatEnum | None = None,
     ) -> None:
         """Predicts MTG format from the section of the article"""
         if format_ is None:
@@ -78,7 +82,10 @@ class FormatHandler:
             self.process_content(content, known_formats, format_=format_)
 
     def process_block(
-        self, block: MtgBlock, known_formats: Dict[MTGFORMATS, int], format_=None
+        self,
+        block: MtgBlock,
+        known_formats: Dict[MtgFormatEnum, int],
+        format_: MtgFormatEnum | None = None,
     ) -> None:
         """Predicts MTG format from the block of the article"""
         if format_ is not None:
@@ -87,13 +94,14 @@ class FormatHandler:
 
         # Get most occurence of a format name in the text
         if self.search_in_text:
+            format_list = list(MtgFormatEnum)
             format_occurences = np.array(
-                [block.text.lower().count(format_) for format_ in MTGFORMATS.__args__]
+                [block.text.lower().count(format_) for format_ in format_list]
             )
             if format_occurences.sum() == 0:
                 return
 
-            format_ = MTGFORMATS.__args__[int(format_occurences.argmax())]
+            format_ = MtgFormatEnum(format_list[int(format_occurences.argmax())])
             block.format_ = format_
 
             if format_ is not None:
@@ -103,8 +111,8 @@ class FormatHandler:
     def process_decklist(
         self,
         decklist: Decklist,
-        known_formats: Dict[MTGFORMATS, int],
-        format_: MTGFORMATS | None = None,
+        known_formats: Dict[MtgFormatEnum, int],
+        format_: MtgFormatEnum | None = None,
     ) -> None:
         """Adds the format of the decklist to the known_formats
 
@@ -121,12 +129,14 @@ class FormatHandler:
             known_formats.setdefault(decklist.format_, 0)
             known_formats[decklist.format_] += 1
 
-    def check_format_in_title(self, title: str) -> MTGFORMATS | None:
+    def check_format_in_title(self, title: str) -> MtgFormatEnum | None:
         """Predicts MTG format from a title of a section of the article"""
         if title is None:
             return None
 
-        formats_in_title = [format_ for format_ in MTGFORMATS.__args__ if format_ in title.lower()]
+        formats_in_title = [
+            MtgFormatEnum(format_) for format_ in list(MtgFormatEnum) if format_ in title.lower()
+        ]
         if len(formats_in_title) == 1:
             return formats_in_title[0]
         return None
