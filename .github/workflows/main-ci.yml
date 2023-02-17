@@ -78,7 +78,7 @@ jobs:
         run: pylint $(git ls-files '*.py')
 
   check-coding-style:
-    needs: create_virtualenv
+    needs: create-virtualenv
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
