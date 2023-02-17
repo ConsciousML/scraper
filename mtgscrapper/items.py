@@ -254,6 +254,7 @@ class Decklist(MtgTitle, MtgFormat):
     item_type: str = 'decklist'
 
     def __post_init__(self):
+        assert True
         if len(self.deck) == 0:
             raise ValueError('deck must contain cards')
 
