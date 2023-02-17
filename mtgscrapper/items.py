@@ -4,10 +4,10 @@ from __future__ import annotations
 import re
 
 from uuid import uuid4
-from typing import List, Tuple, Dict
+from typing import List, Tuple, Dict, Generator
 from dataclasses import dataclass, field
 
-from mtgscrapper.mtg_format import MTGFORMATS
+from mtgscrapper.mtg_format_enum import MtgFormatEnum
 
 
 @dataclass(kw_only=True)
@@ -18,7 +18,7 @@ class MtgItem:
     item_type: str
     id_: str | None = None
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.id_ is None:
             self.id_ = str(uuid4())
 
@@ -29,13 +29,13 @@ class MtgTitle(MtgItem):
 
     title: str
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.title is None:
             raise ValueError('title must have a value.')
         self.title = self.title.strip()
         return super().__post_init__()
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'{self.title}\n'
 
 
@@ -47,20 +47,20 @@ class MtgFormat(MtgItem):
     https://magic.wizards.com/en/formats
     """
 
-    format_: MTGFORMATS | None = None
+    format_: MtgFormatEnum | None = None
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.format_ is not None:
-            self.format_ = self.format_.lower()
-            if not self.format_ in MTGFORMATS.__args__:
+            self.format_ = self.format_.lower()  # type: ignore
+            if not MtgFormatEnum.is_format(self.format_):
                 raise ValueError(f'unkown MTG format {self.format_}.')
         return super().__post_init__()
 
     @classmethod
-    def from_dict(cls, dict_):
+    def from_dict(cls, dict_: Dict) -> MtgFormat:
         return cls(**dict_)
 
-    def to_dict(self):
+    def to_dict(self) -> Dict:
         return vars(self)
 
 
@@ -68,14 +68,14 @@ class MtgFormat(MtgItem):
 class MtgMultiFormat(MtgItem):
     """Class for objects than can contain multiple formats such as Articles"""
 
-    formats: List[MTGFORMATS] | None = None
+    formats: List[MtgFormatEnum] | None = None
 
-    def __post_init__(self):
-        if self.formats is not None and not all(
-            format_ in MTGFORMATS.__args__ for format_ in self.formats
-        ):
-            raise ValueError(f'one of more MTG formats are unkown in {self.formats}')
-        return super().__post_init__()
+    # def __post_init__(self) -> None:
+    #    if self.formats is not None and not all(
+    #       format_ in MtgFormatType.__args__ for format_ in self.formats
+    #    ):
+    #       raise ValueError(f'one of more MTG formats are unkown in {self.formats}')
+    #    return super().__post_init__()
 
 
 @dataclass(kw_only=True)
@@ -85,10 +85,10 @@ class MtgContent(MtgItem):
     For example, a section can contain multiple blocks, sections or decklists.
     """
 
-    content: List[MtgSection | MtgBlock] = field(default_factory=list)  # List of ids
+    content: List[MtgSection | MtgBlock | Decklist] = field(default_factory=list)  # List of ids
     length = 0
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         # Set length of object if called with @classmethod
         len(self)
         return super().__post_init__()
@@ -103,15 +103,15 @@ class MtgContent(MtgItem):
         self.content.append(section)
         self.length += 1
 
-    def __len__(self):
+    def __len__(self) -> int:
         self.length = len(self.content)
         return self.length
 
-    def __iter__(self):
+    def __iter__(self) -> Generator[MtgSection | MtgBlock | Decklist, None, None]:
         for i in range(len(self)):
             yield self[i]
 
-    def __getitem__(self, index):
+    def __getitem__(self, index: int) -> MtgSection | MtgBlock | Decklist:
         if not 0 <= index < self.length:
             raise ValueError(f'index {index} out of range.')
         return self.content[index]
@@ -125,7 +125,7 @@ class MtgContent(MtgItem):
         cls_args = dict_.copy()
         cls_args.pop('length', None)
 
-        content_objects = []
+        content_objects = []  # type: List[MtgItem]
         for content in dict_['content']:
             match content['item_type']:
                 case 'section':
@@ -160,20 +160,20 @@ class MtgArticle(MtgTitle, MtgMultiFormat, MtgContent):
     author: str
     item_type: str = 'article'
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         self.tags = [tag.lower() for tag in self.tags]
 
         return super().__post_init__()
 
-    def set_format(self, format_: MTGFORMATS):
+    def set_format(self, format_: MtgFormatEnum) -> None:
         self._set_format_recursive(self.content, format_=format_)
 
     def _set_format_recursive(
-        self, content_list: List[MtgSection | MtgBlock | Decklist], format_: MTGFORMATS
-    ):
+        self, content_list: List[MtgSection | MtgBlock | Decklist], format_: MtgFormatEnum
+    ) -> None:
         for content in content_list:
             content.format_ = format_
-            if content.item_type == 'section':
+            if isinstance(content, MtgSection):
                 self._set_format_recursive(content.content, format_=format_)
 
     def __str__(self) -> str:
@@ -183,19 +183,19 @@ class MtgArticle(MtgTitle, MtgMultiFormat, MtgContent):
 
 
 @dataclass(kw_only=True)
-class MtgSection(MtgContent, MtgTitle, MtgFormat):
+class MtgSection(MtgContent, MtgTitle, MtgFormat):  # type: ignore
     """Class materializing the Section of an Article"""
 
-    content: List[MtgBlock | MtgSection] = field(default_factory=list)
+    content: List[MtgBlock | MtgSection | Decklist] = field(default_factory=list)
     item_type: str = 'section'
     level: int
 
-    def __str__(self):
+    def __str__(self) -> str:
         string = f'{super().__str__()}\n'
         string += ''.join([str(item) for item in self.content])
         return string
 
-    def add(self, section: MtgSection):
+    def add(self, section: MtgSection) -> None:  # type: ignore
         if self.level >= section.level:
             raise ValueError('cannot add section to sub-section.')
 
@@ -204,7 +204,7 @@ class MtgSection(MtgContent, MtgTitle, MtgFormat):
             return
 
         last_content = self.content[-1]
-        if last_content.item_type == 'section' and last_content.level < section.level:
+        if isinstance(last_content, MtgSection) and last_content.level < section.level:
             last_content.add(section)
         else:
             super().add(section)
@@ -220,7 +220,7 @@ class MtgBlock(MtgFormat):
     text: str
     item_type: str = 'block'
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         self.text = re.sub(r'(\n)\1+', r'\n', self.text).strip()
         return super().__post_init__()
 
@@ -247,19 +247,19 @@ class Decklist(MtgTitle, MtgFormat):
     A deck contains (usually) 60 cards in the main deck and 15 cards in the sideboard (optional).
     """
 
-    deck: List[Tuple[int, str]]
-    sideboard: List[Tuple[int, str]] | None = None
+    deck: List[Tuple[str, str]]
+    sideboard: List[Tuple[str, str]] | None = None
     archetype: str | None = None
     best_of: int | None = None
     item_type: str = 'decklist'
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if len(self.deck) == 0:
             raise ValueError('deck must contain cards')
 
         return super().__post_init__()
 
-    def __str__(self):
+    def __str__(self) -> str:
         metadata = f'Format: {self.format_}\n'
         if self.archetype is not None:
             metadata += f'Archetype: {self.archetype}\n'
@@ -271,7 +271,7 @@ class Decklist(MtgTitle, MtgFormat):
             string += f'Sideboard\n{self.cards_to_str(self.sideboard)}\n'
         return string
 
-    def cards_to_str(self, card_list: List[Tuple[int, str]]) -> str:
+    def cards_to_str(self, card_list: List[Tuple[str, str]]) -> str:
         """Generate a string from a list of cards
 
         Args:

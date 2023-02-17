@@ -1,12 +1,12 @@
 """Contains a Spider to scrap the MTGAZone website"""
 
 import re
-from typing import Generator, Dict, List, Tuple
+from typing import List, Tuple, Any
 from scrapy import Spider
 from scrapy.selector import Selector
 
 from mtgscrapper.items import MtgArticle, MtgSection, MtgBlock, Decklist
-from mtgscrapper.mtg_format import FormatHandler
+from mtgscrapper.mtg_format_handler import FormatHandler
 
 
 class MTGArenaZoneSpider(Spider):
@@ -16,7 +16,12 @@ class MTGArenaZoneSpider(Spider):
     start_urls = ['https://mtgazone.com/articles/']
 
     def __init__(
-        self, *args, forbidden_tags=None, forbidden_titles=None, parse_article=True, **kwargs
+        self,
+        *args: Any,
+        forbidden_tags: List[str] | None = None,
+        forbidden_titles: List[str] | None = None,
+        parse_article: bool | str = True,
+        **kwargs: Any,
     ) -> None:
         super().__init__(*args, **kwargs)
         self.forbidden_tags = forbidden_tags or ['Premium']
@@ -24,10 +29,12 @@ class MTGArenaZoneSpider(Spider):
 
         if isinstance(parse_article, str) and parse_article.lower() == 'false':
             self.parse_article = False
-        else:
+        elif isinstance(parse_article, bool):
             self.parse_article = parse_article
+        else:
+            raise ValueError('wrong type for parse_article variable.')
 
-    def parse(self, response) -> Generator[Dict, None, None]:
+    def parse(self, response: Any) -> Any:
         """Overrides parse method of the scrapy.Spider class
 
         Parses the articles from the MTGAZone website and runs a spider to crawl the content of the
@@ -71,7 +78,7 @@ class MTGArenaZoneSpider(Spider):
         if next_page is not None:
             yield response.follow(next_page, self.parse)
 
-    def parse_article_content(self, response, article: MtgArticle) -> Generator[Dict, None, None]:
+    def parse_article_content(self, response: Any, article: MtgArticle) -> Any:
         """Crawls the content of an article
 
         Fills the 'content' attribute of the article and return the article as a dictionary
@@ -103,7 +110,7 @@ class MTGArenaZoneSpider(Spider):
                 )
             else:
                 if block_tag == 'div':
-                    element = self.parse_decklist(selector, article)
+                    element = self.parse_decklist(selector, article)  # type: Decklist | MtgBlock
                 else:
                     if len(section_list) == 0:
                         section_list.append(MtgSection(date=article.date, title='', level=int(1e4)))
@@ -132,7 +139,7 @@ class MTGArenaZoneSpider(Spider):
     def add_package_content(self, section_list: List[MtgSection], article: MtgArticle) -> None:
         """Recursively adds the content of a section inside its attribute 'content'"""
         if len(section_list) == 0:
-            raise ValueError(f'article of id {article.id} with url {article.url} is empty.')
+            raise ValueError(f'article of id {article.id_} with url {article.url} is empty.')
         if len(section_list) == 1:
             article.add(section_list)
         else:
@@ -161,19 +168,27 @@ class MTGArenaZoneSpider(Spider):
             title=selector.xpath('.//div[@class="name"]/text()').get(),
             date=article.date,
             format_=selector.xpath('.//div[@class="format"]/text()').get(),
-            deck=self.parse_cards(selector.xpath('.//div[@class="decklist main"]')),
-            sideboard=self.parse_cards(selector.xpath('.//div[@class="decklist sideboard"]')),
+            deck=self.parse_deck(selector.xpath('.//div[@class="decklist main"]')),
+            sideboard=self.parse_sideboard(selector.xpath('.//div[@class="decklist sideboard"]')),
             archetype=selector.xpath('.//div[@class="archetype"]/text()').get(),
             best_of=best_of,
         )
 
-    def parse_cards(self, selector: Selector) -> List[Tuple]:
-        """Parse the cards inside of a scrapy selector"""
+    def parse_deck(self, selector: Selector) -> List[Tuple[str, str]]:
+        """Parse cards inside a deck"""
         card_list = selector.xpath(
             './/div[contains(@class,"card")]/@*[name()="data-quantity" or name()="data-name"]'
         ).getall()
 
         card_pairs = [card_list[i : i + 2] for i in range(0, len(card_list), 2)]
+        return card_pairs
+
+    def parse_sideboard(self, selector: Selector) -> List[Tuple[str, str]] | None:
+        """Parse the cards inside of a sideboard
+
+        The only difference with deck is that it can be None
+        """
+        card_pairs = self.parse_deck(selector)
 
         return card_pairs if len(card_pairs) > 0 else None
 
