@@ -25,6 +25,7 @@ class FormatHandler:
 
         known_formats = {format_: 0 for format_ in formats}
 
+        priority_format: MtgFormatEnum | None = None
         if len(formats) == 1:
             priority_format = formats[0]
         else:
