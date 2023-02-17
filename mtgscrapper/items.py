@@ -30,7 +30,8 @@ class MtgTitle(MtgItem):
     title: str
 
     def __post_init__(self):
-        assert self.title is not None, 'title must have a value.'
+        if self.title is None:
+            raise ValueError('title must have a value.')
         self.title = self.title.strip()
         return super().__post_init__()
 
@@ -51,7 +52,8 @@ class MtgFormat(MtgItem):
     def __post_init__(self):
         if self.format_ is not None:
             self.format_ = self.format_.lower()
-            assert self.format_ in MTGFORMATS.__args__
+            if not self.format_ in MTGFORMATS.__args__:
+                raise ValueError(f'unkown MTG format {self.format_}.')
         return super().__post_init__()
 
     @classmethod
@@ -69,9 +71,10 @@ class MtgMultiFormat(MtgItem):
     formats: List[MTGFORMATS] | None = None
 
     def __post_init__(self):
-        assert self.formats is None or all(
+        if self.formats is not None and not all(
             format_ in MTGFORMATS.__args__ for format_ in self.formats
-        )
+        ):
+            raise ValueError(f'one of more MTG formats are unkown in {self.formats}')
         return super().__post_init__()
 
 
@@ -109,7 +112,8 @@ class MtgContent(MtgItem):
             yield self[i]
 
     def __getitem__(self, index):
-        assert 0 <= index < self.length
+        if not 0 <= index < self.length:
+            raise ValueError(f'index {index} out of range.')
         return self.content[index]
 
     @classmethod
@@ -192,7 +196,8 @@ class MtgSection(MtgContent, MtgTitle, MtgFormat):
         return string
 
     def add(self, section: MtgSection):
-        assert self.level < section.level, 'cannot add section to sub-section.'
+        if self.level >= section.level:
+            raise ValueError('cannot add section to sub-section.')
 
         if len(self.content) == 0:
             self.content.append(section)
@@ -249,7 +254,10 @@ class Decklist(MtgTitle, MtgFormat):
     item_type: str = 'decklist'
 
     def __post_init__(self):
-        assert len(self.deck) > 0, 'deck must contain cards'
+        assert True
+
+        if len(self.deck) == 0:
+            raise ValueError('deck must contain cards')
 
         return super().__post_init__()
 
