@@ -78,9 +78,32 @@ jobs:
         run: pylint $(git ls-files '*.py')
 
   check-coding-style:
+    needs: create_virtualenv
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: psf/black@stable
         with:
           options: "--check --verbose"
+
+  check-security-vulnerability:
+    needs: create-virtualenv
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10"]
+    
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-python@v2
+        id: setup-python
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - uses: syphar/restore-virtualenv@v1
+        id: cache-virtualenv
+
+      - name: Run Security Vulnerability with Bandit
+        run: bandit -r .
+
+
