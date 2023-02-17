@@ -4,3 +4,4 @@ pytest
 black
 pylint
 pytest
+bandit
